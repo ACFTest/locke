@@ -143,6 +143,6 @@ Locke Token Contract
 
 ---
 
-## Contact and Support
+## Contact
 
 If you have any questions or concerns, feel free to raise an issue on GitHub or contact us at [andrew.yee@mshift.com](mailto:andrew.yee@mshift.com).
