@@ -11,7 +11,7 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 - **Minting**: Owner-only function to mint new tokens within the capped supply limit.
 - **Burning**: Allows token holders (including the owner of the smart contract) to burn tokens from their balance.
 - **Upgrade and Downgrade**: Demonstrates smooth contract upgrades and downgrades while maintaining state integrity.
-- **Fully Tested**: Comprehensive test suite covering initialization, minting, burning, edge cases, upgrades, and downgrades.
+- **Fully Tested**:  Test cases covering initialization, minting, burning, edge cases, upgrades, and downgrades.
 
 ---
 
@@ -32,13 +32,14 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 4. **Tests**:
    - Test cases covers normal functionality, edge cases, and upgrade/downgrade flows.
    - Upgrade-specific functionality (e.g., `getVersion`) is tested after upgrade.
-   - 
+
 ---
 
 ## Prerequisites
 
 - **Node.js**: v16.x or above recommended.
 - **Hardhat**: Installed globally or as a dev dependency.
+- **Solidity Version**: 0.8.17
 - **Dependencies**:
   - OpenZeppelin Contracts
   - OpenZeppelin Upgradeable Library
@@ -145,4 +146,4 @@ Locke Token Contract
 
 ## Contact
 
-If you have any questions or concerns, feel free to raise an issue on GitHub or contact us at [andrew.yee@mshift.com](mailto:andrew.yee@mshift.com).
+If you have any questions, feel free to raise an issue on GitHub or contact us at [andrew.yee@mshift.com](mailto:andrew.yee@mshift.com).
