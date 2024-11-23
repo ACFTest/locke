@@ -61,7 +61,7 @@ Clone the repository and install the required dependencies:
 
 ```bash
 
-git clone https://github.com/ACFTest/locke.git
+git clone https://github.com/AmericanCryptoFedDAO/locke.git
 cd locke
 npm install
 ```
