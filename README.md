@@ -163,4 +163,4 @@ Locke Token Contract
 
 ## Contact
 
-If you have any questions, feel free to raise an issue on GitHub or contact us at [andrew.yee@mshift.com](mailto:andrew.yee@mshift.com).
+If you have any questions, feel free to raise an issue on GitHub or contact us at info@americancryptofed.org or andrew.yee@mshift.com.
