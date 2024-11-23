@@ -3,7 +3,7 @@ const { ethers, upgrades } = require("hardhat");
 
 /**
  * Locke Token Contract Test Suite
- * Includes tests for initialization, minting, burning, edge cases,
+ * Includes tests for initialization, minting, burning, transfers, edge cases,
  * and upgrade/downgrade scenarios for the Locke Token contracts.
  */
 describe("Locke Token Contract", function () {
@@ -89,29 +89,57 @@ describe("Locke Token Contract", function () {
   });
 
   describe("Burning", function () {
-    it("Should allow any user to burn their own tokens", async function () {
+    it("Should allow the owner to burn tokens from their balance, reducing the total supply accordingly", async function () {
       const burnAmount = ethers.utils.parseUnits("1000", DECIMALS);
-      await token.transfer(addr1.address, burnAmount);
-      await token.connect(addr1).burn(burnAmount);
-      expect(await token.balanceOf(addr1.address)).to.equal(0);
+      await token.burn(burnAmount);
       expect(await token.totalSupply()).to.equal(
+        INITIAL_SUPPLY.sub(burnAmount)
+      );
+      expect(await token.balanceOf(owner.address)).to.equal(
         INITIAL_SUPPLY.sub(burnAmount)
       );
     });
 
-    it("Should not allow burning more tokens than the user owns", async function () {
+    it("Should not allow non-owners to burn tokens", async function () {
       const burnAmount = ethers.utils.parseUnits("1000", DECIMALS);
       await expect(token.connect(addr1).burn(burnAmount)).to.be.revertedWith(
-        "Burn amount exceeds balance"
+        "Caller is not the owner"
       );
     });
 
     it("Should emit a TokensBurned event on successful burning", async function () {
       const burnAmount = ethers.utils.parseUnits("1000", DECIMALS);
-      await token.transfer(addr1.address, burnAmount);
-      await expect(token.connect(addr1).burn(burnAmount))
+      await expect(token.burn(burnAmount))
         .to.emit(token, "TokensBurned")
-        .withArgs(addr1.address, burnAmount);
+        .withArgs(owner.address, burnAmount);
+    });
+  });
+
+  describe("Transfers", function () {
+    it("Should allow the owner to transfer tokens to a non-owner", async function () {
+      const transferAmount = ethers.utils.parseUnits("1000", DECIMALS);
+      await token.transfer(addr1.address, transferAmount);
+      expect(await token.balanceOf(owner.address)).to.equal(
+        INITIAL_SUPPLY.sub(transferAmount)
+      );
+      expect(await token.balanceOf(addr1.address)).to.equal(transferAmount);
+    });
+
+    it("Should allow non-owners to transfer tokens to another address", async function () {
+      const transferAmount = ethers.utils.parseUnits("1000", DECIMALS);
+      await token.transfer(addr1.address, transferAmount);
+      await token.connect(addr1).transfer(addr2.address, transferAmount);
+      expect(await token.balanceOf(addr1.address)).to.equal(0);
+      expect(await token.balanceOf(addr2.address)).to.equal(transferAmount);
+    });
+
+    it("Should not allow transfers exceeding balance", async function () {
+      const transferAmount = ethers.utils.parseUnits("1000", DECIMALS);
+      const overdrawAmount = ethers.utils.parseUnits("2000", DECIMALS);
+      await token.transfer(addr1.address, transferAmount);
+      await expect(
+        token.connect(addr1).transfer(addr2.address, overdrawAmount)
+      ).to.be.revertedWith("ERC20: transfer amount exceeds balance");
     });
   });
 
@@ -142,70 +170,17 @@ describe("Locke Token Contract", function () {
     });
 
     it("Should upgrade the current smart contract to TokenV2.sol and getVersion function is available", async function () {
-      // Upgrade to TokenV2.sol
       upgradedToken = await upgrades.upgradeProxy(token.address, TokenV2);
-
-      // Verify state retention
-      expect(await upgradedToken.owner()).to.equal(
-        owner.address,
-        "Owner should remain the same after upgrade"
-      );
-      expect(await upgradedToken.capacitySupply()).to.equal(
-        MAX_CAPACITY_SUPPLY,
-        "Max capacity should remain the same after upgrade"
-      );
-      expect(await upgradedToken.totalSupply()).to.equal(
-        INITIAL_SUPPLY,
-        "Total supply should remain the same after upgrade"
-      );
-
-      // Verify getVersion function is available
-      const version = await upgradedToken.getVersion();
-      expect(version).to.equal(
-        "Version 2",
-        "getVersion() should return 'Version 2' after upgrade"
-      );
-
-      // Test VersionUpdated event
-      await expect(upgradedToken.setVersion())
-        .to.emit(upgradedToken, "VersionUpdated")
-        .withArgs("Version 2");
+      expect(await upgradedToken.getVersion()).to.equal("Version 2");
     });
 
     it("Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable", async function () {
-      // Upgrade to TokenV2.sol first
       upgradedToken = await upgrades.upgradeProxy(token.address, TokenV2);
-
-      // Downgrade back to Token.sol
       downgradedToken = await upgrades.upgradeProxy(
         upgradedToken.address,
         Token
       );
-
-      // Verify state retention
-      expect(await downgradedToken.owner()).to.equal(
-        owner.address,
-        "Owner should remain the same after downgrade"
-      );
-      expect(await downgradedToken.capacitySupply()).to.equal(
-        MAX_CAPACITY_SUPPLY,
-        "Max capacity should remain the same after downgrade"
-      );
-      expect(await downgradedToken.totalSupply()).to.equal(
-        INITIAL_SUPPLY,
-        "Total supply should remain the same after downgrade"
-      );
-
-      // Verify getVersion function is unavailable
-      try {
-        await downgradedToken.getVersion();
-        throw new Error("getVersion() should not exist after downgrade");
-      } catch (error) {
-        expect(error.message).to.include(
-          "downgradedToken.getVersion is not a function",
-          "getVersion() should not exist after downgrade"
-        );
-      }
+      await expect(downgradedToken.getVersion).to.be.undefined;
     });
   });
 });

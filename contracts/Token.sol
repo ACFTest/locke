@@ -72,14 +72,11 @@ contract Token is Initializable, ERC20Upgradeable, ReentrancyGuardUpgradeable {
     }
 
     /**
-     * @dev Burns tokens from the caller's balance.
+     * @dev Burns tokens from the owner's balance and reduces the total supply.
+     * Only the owner can burn tokens.
      * @param amount The number of tokens to burn (in smallest units).
-     * Requirements:
-     * - The caller must have at least `amount` tokens.
-     * - `amount` must be greater than zero.
-     * Emits a {TokensBurned} event.
      */
-    function burn(uint256 amount) external nonReentrant {
+    function burn(uint256 amount) external onlyOwner nonReentrant {
         require(amount > 0, "Burn amount must be greater than zero");
         require(balanceOf(msg.sender) >= amount, "Burn amount exceeds balance");
 
