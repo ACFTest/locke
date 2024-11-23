@@ -1,6 +1,6 @@
 # Locke Token (LOCKE)
 
-An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the LOCKE Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract.
+An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the LOCKE Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract. This is a governance token.
 
 ---
 
