@@ -1,19 +1,27 @@
 # Locke Token (LOCKE)
 
-An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the Locke Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract.
+An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the LOCKE Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract.
 
 ---
 
 ## Features
 
 - **Upgradeable Contract**: Built using OpenZeppelin's upgradeable contract standards.
-- **Maximum Supply**: Enforces a capped supply for token minting.
-- **Minting**: Owner-only function to mint new tokens within the capped supply limit.
-- **Burning**: Allows token holders (including the owner of the smart contract) to burn tokens from their balance.
+- **Maximum Supply**: Enforces a capped supply for LOCKE token minting.
+- **Minting**: Owner-only function (Smart Contract Owner) to mint new LOCKE tokens within the capped supply limit.
+- **Burning**: Owner-only function (Smart Contract Owner) to burn LOCKE tokens from their balance, reducing the total supply accordingly.
 - **Upgrade and Downgrade**: Demonstrates smooth contract upgrades and downgrades while maintaining state integrity.
 - **Fully Tested**:  Test cases covering initialization, minting, burning, edge cases, upgrades, and downgrades.
 
 ---
+
+## Deployment Parameters
+
+- **maxCapacitySupply**: 1,000,000 LOCKE tokens as the maximum capacity
+- **initialSupply**: 500,000 LOCKE tokens as the initial supply
+
+---
+
 
 ## Self Audit
 
