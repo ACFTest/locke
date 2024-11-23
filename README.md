@@ -60,8 +60,9 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 Clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/your-org/locke-token.git
-cd locke-token
+
+git clone https://github.com/ACFTest/locke.git
+cd locke
 npm install
 ```
 
