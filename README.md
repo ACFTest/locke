@@ -139,16 +139,24 @@ Locke Token Contract
       ✔ Should not allow minting beyond the max capacity supply
       ✔ Should emit a TokensMinted event on successful minting
     Burning
-      ✔ Should allow any user to burn their own tokens
-      ✔ Should not allow burning more tokens than the user owns
-      ✔ Should emit a TokensBurned event on successful burning (71ms)
+      ✔ Should allow the owner to burn tokens from their balance, reducing the total supply accordingly
+      ✔ Should not allow non-owners to burn tokens
+      ✔ Should emit a TokensBurned event on successful burning
+    Transfers
+      ✔ Should allow the owner to transfer tokens to a non-owner
+      ✔ Should allow non-owners to transfer tokens to another address
+      ✔ Should not allow transfers exceeding balance
     Edge Cases
       ✔ Should not allow minting to the zero address
       ✔ Should not allow burning zero tokens
       ✔ Should not allow minting zero tokens
     Upgrade and Downgrade
-      ✔ Should upgrade the current smart contract to TokenV2.sol and getVersion function is available (58ms)
-      ✔ Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable (80ms)
+      ✔ Should upgrade the current smart contract to TokenV2.sol and getVersion function is available
+      ✔ Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable
+
+
+  19 passing (1s)
+
 ```
 
 ---
