@@ -1,19 +1,27 @@
 # Locke Token (LOCKE)
 
-An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the Locke Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract.
+An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the LOCKE Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract.
 
 ---
 
 ## Features
 
 - **Upgradeable Contract**: Built using OpenZeppelin's upgradeable contract standards.
-- **Maximum Supply**: Enforces a capped supply for token minting.
-- **Minting**: Owner-only function to mint new tokens within the capped supply limit.
-- **Burning**: Allows token holders (including the owner of the smart contract) to burn tokens from their balance.
+- **Maximum Supply**: Enforces a capped supply for LOCKE token minting.
+- **Minting**: Owner-only function (Smart Contract Owner) to mint new LOCKE tokens within the capped supply limit.
+- **Burning**: Owner-only function (Smart Contract Owner) to burn LOCKE tokens from their balance, reducing the total supply accordingly.
 - **Upgrade and Downgrade**: Demonstrates smooth contract upgrades and downgrades while maintaining state integrity.
 - **Fully Tested**:  Test cases covering initialization, minting, burning, edge cases, upgrades, and downgrades.
 
 ---
+
+## Deployment Parameters
+
+- **maxCapacitySupply**: 1,000,000 LOCKE tokens as the maximum capacity
+- **initialSupply**: 500,000 LOCKE tokens as the initial supply
+
+---
+
 
 ## Self Audit
 
@@ -52,8 +60,9 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 Clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/your-org/locke-token.git
-cd locke-token
+
+git clone https://github.com/ACFTest/locke.git
+cd locke
 npm install
 ```
 
@@ -130,16 +139,24 @@ Locke Token Contract
       ✔ Should not allow minting beyond the max capacity supply
       ✔ Should emit a TokensMinted event on successful minting
     Burning
-      ✔ Should allow any user to burn their own tokens
-      ✔ Should not allow burning more tokens than the user owns
-      ✔ Should emit a TokensBurned event on successful burning (71ms)
+      ✔ Should allow the owner to burn tokens from their balance, reducing the total supply accordingly
+      ✔ Should not allow non-owners to burn tokens
+      ✔ Should emit a TokensBurned event on successful burning
+    Transfers
+      ✔ Should allow the owner to transfer tokens to a non-owner
+      ✔ Should allow non-owners to transfer tokens to another address
+      ✔ Should not allow transfers exceeding balance
     Edge Cases
       ✔ Should not allow minting to the zero address
       ✔ Should not allow burning zero tokens
       ✔ Should not allow minting zero tokens
     Upgrade and Downgrade
-      ✔ Should upgrade the current smart contract to TokenV2.sol and getVersion function is available (58ms)
-      ✔ Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable (80ms)
+      ✔ Should upgrade the current smart contract to TokenV2.sol and getVersion function is available
+      ✔ Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable
+
+
+  19 passing (1s)
+
 ```
 
 ---
