@@ -87,7 +87,7 @@ This will deploy the proxy and the `Token` implementation contract.
 
 ### 2. **Upgrade to TokenV2.sol Smart Contract**
 
-**Note:** TokenV2.sol is a mock smart contract used exclusively for testing purposes to demonstrate the upgrade and downgrade functionality of this project. It is not intended for production use.
+**Note:** TokenV2.sol is a mock smart contract used exclusively for testing purposes with an additional function getVersion() to demonstrate the upgrade and downgrade functionality of this project. It is not intended for production use.
 
 ```bash
 npx hardhat run scripts/upgrade.js --network <network-name>
