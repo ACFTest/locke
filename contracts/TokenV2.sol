@@ -5,22 +5,15 @@ import "./Token.sol";
 
 /**
  * @title Locke Token V2 (LOCKE)
- * @dev Upgraded Token contract with additional functionality.
+ * @dev Upgraded Token contract for demonstration purposes.
+ * Note: This contract is only for testing upgradability and is not intended for production use.
  */
 contract TokenV2 is Token {
-    event VersionUpdated(string version);
-
     /**
      * @dev Returns the version of the contract.
      */
     function getVersion() public pure returns (string memory) {
         return "Version 2";
     }
-
-    /**
-     * @dev Emits a VersionUpdated event with the version.
-     */
-    function setVersion() public {
-        emit VersionUpdated(getVersion());
-    }
 }
+
