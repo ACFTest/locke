@@ -77,7 +77,7 @@ npm install
 
 **Note:** For testing locally use **localhost** for `<network-name>`
 
-### 1. **Deploy the Base Contract**
+### 1. **Deploy the Base Contract, Token.sol**
 
 ```bash
 npx hardhat run scripts/deploy.js --network <network-name>
@@ -85,7 +85,9 @@ npx hardhat run scripts/deploy.js --network <network-name>
 
 This will deploy the proxy and the `Token` implementation contract.
 
-### 2. **Upgrade to TokenV2**
+### 2. **Upgrade to TokenV2.sol Smart Contract**
+
+**Note:** TokenV2.sol is a mock smart contract used exclusively for testing purposes to demonstrate the upgrade and downgrade functionality of this project. It is not intended for production use.
 
 ```bash
 npx hardhat run scripts/upgrade.js --network <network-name>
@@ -93,7 +95,7 @@ npx hardhat run scripts/upgrade.js --network <network-name>
 
 Upgrades the proxy to point to the `TokenV2` implementation contract. Ensures state integrity while adding `getVersion` functionality.
 
-### 3. **Downgrade to Token**
+### 3. **Downgrade to Base Smart Contract, Token.sol**
 
 ```bash
 npx hardhat run scripts/downgrade.js --network <network-name>
@@ -105,14 +107,14 @@ Downgrades the proxy back to the original `Token` implementation.
 
 ## Example Outputs
 
-### Upgrade to TokenV2
+### Upgrade to TokenV2.sol Smart Contract
 
 ```
 Locke Token upgraded to TokenV2 at: <eth address>
 Version updated to: Version 2
 ```
 
-### Downgrade to Token
+### Downgrade to Token.sol Smart Contract
 
 ```
 Locke Token downgraded to Token at: <eth address>
