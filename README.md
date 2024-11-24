@@ -1,6 +1,6 @@
 # Locke Token (LOCKE)
 
-An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the LOCKE Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract.
+An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the LOCKE Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract. This is a governance token.
 
 ---
 
@@ -11,6 +11,11 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 - **Minting**: Owner-only function (Smart Contract Owner) to mint new LOCKE tokens within the capped supply limit.
 - **Burning**: Owner-only function (Smart Contract Owner) to burn LOCKE tokens from their balance, reducing the total supply accordingly.
 - **Upgrade and Downgrade**: Demonstrates smooth contract upgrades and downgrades while maintaining state integrity.
+   - **Token.sol** is the primary smart contract, intended for production, and the main focus of this project.
+   - **TokenV2.sol** is a mock smart contract created exclusively for testing purposes with an additional function getVersion(). It is designed to demonstrate the upgrade and downgrade functionality of this project and is not intended for production use.
+   - **Example test cases for Upgrade and Downgrade Smart Contract**
+      - Upgrade from Token.sol to TokenV2.sol
+      - Downgrade from TokenV2.sol to Token.sol.
 - **Fully Tested**:  Test cases covering initialization, minting, burning, edge cases, upgrades, and downgrades.
 
 ---
@@ -61,7 +66,7 @@ Clone the repository and install the required dependencies:
 
 ```bash
 
-git clone https://github.com/ACFTest/locke.git
+git clone https://github.com/AmericanCryptoFedDAO/locke.git
 cd locke
 npm install
 ```
@@ -72,7 +77,7 @@ npm install
 
 **Note:** For testing locally use **localhost** for `<network-name>`
 
-### 1. **Deploy the Base Contract**
+### 1. **Deploy the Base Contract, Token.sol**
 
 ```bash
 npx hardhat run scripts/deploy.js --network <network-name>
@@ -80,7 +85,9 @@ npx hardhat run scripts/deploy.js --network <network-name>
 
 This will deploy the proxy and the `Token` implementation contract.
 
-### 2. **Upgrade to TokenV2**
+### 2. **Upgrade to TokenV2.sol Smart Contract**
+
+**Note:** TokenV2.sol is a mock smart contract used exclusively for testing purposes with an additional function getVersion() to demonstrate the upgrade and downgrade functionality of this project. It is not intended for production use.
 
 ```bash
 npx hardhat run scripts/upgrade.js --network <network-name>
@@ -88,7 +95,7 @@ npx hardhat run scripts/upgrade.js --network <network-name>
 
 Upgrades the proxy to point to the `TokenV2` implementation contract. Ensures state integrity while adding `getVersion` functionality.
 
-### 3. **Downgrade to Token**
+### 3. **Downgrade to Base Smart Contract, Token.sol**
 
 ```bash
 npx hardhat run scripts/downgrade.js --network <network-name>
@@ -100,14 +107,14 @@ Downgrades the proxy back to the original `Token` implementation.
 
 ## Example Outputs
 
-### Upgrade to TokenV2
+### Upgrade to TokenV2.sol Smart Contract
 
 ```
 Locke Token upgraded to TokenV2 at: <eth address>
 Version updated to: Version 2
 ```
 
-### Downgrade to Token
+### Downgrade to Token.sol Smart Contract
 
 ```
 Locke Token downgraded to Token at: <eth address>
