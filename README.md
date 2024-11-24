@@ -11,6 +11,11 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 - **Minting**: Owner-only function (Smart Contract Owner) to mint new LOCKE tokens within the capped supply limit.
 - **Burning**: Owner-only function (Smart Contract Owner) to burn LOCKE tokens from their balance, reducing the total supply accordingly.
 - **Upgrade and Downgrade**: Demonstrates smooth contract upgrades and downgrades while maintaining state integrity.
+   - **Token.sol** is the primary smart contract, intended for production, and the main focus of this project.
+   - **TokenV2.sol** is a mock smart contract created exclusively for testing purposes. It is designed to demonstrate the upgrade and downgrade functionality of this project and is not intended for production use.
+   - **Example test cases for Upgrade and Downgrade**
+      - Upgrade from Token.sol to TokenV2.sol
+      - Downgrade from TokenV2.sol to Token.sol.
 - **Fully Tested**:  Test cases covering initialization, minting, burning, edge cases, upgrades, and downgrades.
 
 ---
