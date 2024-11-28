@@ -22,9 +22,9 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 
 ## Deployment Parameters
 
-- **maxCapacitySupply**: 1,000,000 LOCKE tokens as the maximum capacity
-- **initialSupply**: 500,000 LOCKE tokens as the initial supply
-- **totalSupply**: is also the initialSupply of 500,000 LOCKE tokens. This is also called the current LOCKE token supply.
+- **maxCapacitySupply**: 1,000,000,000,000 LOCKE tokens as the maximum capacity
+- **initialSupply**: 50,000,000 LOCKE tokens as the initial supply
+- **totalSupply**: is also the initialSupply of 50,000,000 LOCKE tokens. This is also called the current LOCKE token supply.
 ---
 
 
