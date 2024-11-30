@@ -34,8 +34,6 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 
 **dayCounter**: Dynamically calculated in `Distribution.sol` based on the elapsed time since `deploymentTimestamp`, adjusted for Mountain Time (MT) with predefined daylight savings rules. Used to track the number of days and account for skipped days.
 
-**distributionContractAddress**: The address of the deployed `Distribution.sol` contract. This is required in `Token.sol` during initialization to enable interaction between the two smart contracts.
-
 ## Self Audit
 
 1. **State Integrity**:
