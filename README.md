@@ -26,13 +26,15 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 
 **initialSupply**: 50,000,000 LOCKE tokens minted to the owner's wallet during deployment. This represents the initial circulating supply.
 
-**maxCurrentDailySupply**: Managed in `Distribution.sol`. Calculated dynamically as the base daily supply (50,000,000 LOCKE tokens) plus the total claims from the previous day. This value is accessed by `Token.sol` to enforce minting limits.
-
 **totalSupply**: is also the initialSupply of 50,000,000 LOCKE tokens. This is also called the current LOCKE token supply.
 
-**deploymentTimestamp**: The timestamp recorded when the `Distribution.sol` contract is deployed. Used to calculate the current day (`dayCounter`) dynamically.
+**Distribution.sol**:
 
-**dayCounter**: Dynamically calculated in `Distribution.sol` based on the elapsed time since `deploymentTimestamp`, adjusted for Mountain Time (MT) with predefined daylight savings rules. Used to track the number of days and account for skipped days.
+- **maxCurrentDailySupply**: Managed in `Distribution.sol`. Calculated dynamically as the base daily supply (50,000,000 LOCKE tokens) plus the total claims from the previous day. This value is accessed by `Token.sol` to enforce minting limits.
+
+- **deploymentTimestamp**: The timestamp recorded when the `Distribution.sol` contract is deployed. Used to calculate the current day (`dayCounter`) dynamically.
+
+- **dayCounter**: Dynamically calculated in `Distribution.sol` based on the elapsed time since `deploymentTimestamp`, adjusted for Mountain Time (MT) with predefined daylight savings rules. Used to track the number of days and account for skipped days.
 
 ## Self Audit
 
