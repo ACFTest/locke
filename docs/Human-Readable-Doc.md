@@ -88,7 +88,7 @@ If the requested amount exceeds the daily limit, only the available amount is pr
 - **Minted Tokens** = **Base Supply (50M)** - **Total Daily Supply**.
 
 #### Minting Formula 2 (Mint on demand by contributor's claim):
-- **Minted Tokens** = Difference between **Contributor's Claim Amount** and **Total Daily Supply** within **Maximum daily supply**.
+- **Minted Tokens** = Difference between **Contributor's Claim Amount** and **Total Daily Supply** within **Max Daily Supply Limit**.
 
 #### Examples:
 1. **Day Start (Total Daily Supply):** 40M tokens available (already minted before).
@@ -99,12 +99,12 @@ If the requested amount exceeds the daily limit, only the available amount is pr
    - **Previous day claims:** 40M tokens.
    - **Total Daily Supply:** 40M. 
    ####
-   - **Base supply:** 50M.
-   - **Maximum daily supply:** 50M (Base Supply) + 40M (Previous Day Claims) = 90M.
-   -  **Total Daily Supply:** 50M.
+   - **Base Supply:** 50M.
+   - **Max Daily Supply Limit:** 50M (Base Supply) + 40M (Previous Day Claims) = 90M.
+   - **Total Daily Supply:** 50M.
    ####
    - **Contributor wants to claim:** 60M.
-   - **Minted Tokens:** 60M - 50M = 10M additional tokens.
+   - **Minted Tokens:** 60M (Contributor's Claim Amount) - 50M (Total Daily Supply) = 10M additional tokens.
    - **Claimed Tokens:** 60M.
    - **Total Daily Supply:** 0M.
   
@@ -112,15 +112,15 @@ If the requested amount exceeds the daily limit, only the available amount is pr
    - **Previous day claims:** 60M tokens.
    - **Total Daily Supply:** 0M.
    ####  
-   - **Base supply:** 50M. (Note: This is not minted, just a capacity or a rule to mint that amount)
+   - **Base Supply:** 50M. (Note: This is not minted, just a capacity or a rule to mint that amount)
    - **Minted Tokens:** 50M (Base Supply) - 0M (Current available tokens) = 50M additional tokens.
    - **Total Daily Supply:** 50M.
    ####  
-   - **Maximum daily supply:** 50M (Base Supply) + 60M (Previous Day Claims) = 110M.
-   -  **Total Daily Supply:** 50M.
+   - **Max Daily Supply Limit:** 50M (Base Supply) + 60M (Previous Day Claims) = 110M.
+   - **Total Daily Supply:** 50M.
    ####
    - **Contributor wants to claim:** 60M.
-   - **Minted Tokens:** 60M - 50M = 10M additional tokens.
+   - **Minted Tokens:** 60M (Contributor's Claim Amount) - 50M (Total Daily Supply) = 10M additional tokens.
    - **Total Daily Supply:** 60M.
    ####  
    - **Claimed Tokens:** 60M.
