@@ -83,7 +83,10 @@ Ensures the daily base supply (50M tokens) is maintained.
 Mint on demand if claims exceed the current supply available but stay within the maximum daily supply.
 
 #### Minting Formula 1 (Maintaining 50M daily supply):
-- **Minted Tokens = Base Supply (50M) - Current Available Tokens.**
+- **Minted Tokens** = **Base Supply (50M)** - **Total Daily Supply**.
+
+#### Minting Formula 2 (Mint on demand by contributor's claim):
+- **Minted Tokens** = Difference between Contributor's Claim Amount and **Total Daily Supply** within **Maximum daily supply**.
 
 #### Examples:
 1. **Day Start (Total Daily Supply):** 40M tokens available (already minted before).
