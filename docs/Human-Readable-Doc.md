@@ -4,8 +4,12 @@
 
 ### 1. Token Supply Limits
 
+#### Units Abbreviation:
+- **Trillion:** T
+- **Million:** M
+
 #### Maximum Supply:
-The total supply of Locke tokens is capped at **1 trillion tokens**, ensuring a fixed limit on the total number of tokens that can ever exist on the Ethereum Blockchain.
+The total supply of Locke tokens is capped at **1 Trillion tokens** or (1T), ensuring a fixed limit on the total number of tokens that can ever exist on the Ethereum Blockchain.
 
 #### Max Daily Supply Limit:
 - **Max Daily Supply Limit = Base Supply** + **Previous Day Claims:**
