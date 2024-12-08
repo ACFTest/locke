@@ -12,14 +12,17 @@ The total supply of Locke tokens is capped at **1 trillion tokens**, ensuring a 
   - **Base Supply:** 50 million (or 50M) Locke tokens are available daily.
   - **Previous Day Claims:** Tokens claimed the previous day are added to the base supply.
 
+#### Total Daily Supply:
+  - **Total Daily Supply:** Current available tokens on the day. Amount ranges from 0M to Max Daily Supply Limit.
+
 #### Examples:
 - **Example 1:**
-  - **Day 1:** Total Daily supply (Current available tokens) = 50M tokens (Base Locke Token Supply initially mint on deployment), with 40M claimed.
-  - **Day 2:** Total Daily supply = 10M left; to maintain 50M tokens, 40M tokens will be automatically minted at 12:00 AM Mountain Time.
+  - **Day 1:** Total Daily Supply = 50M tokens (Base Locke Token Supply initially mint on deployment), with 40M claimed.
+  - **Day 2:** Total Daily Supply = 10M left; to maintain 50M tokens, 40M tokens will be automatically minted at 12:00 AM Mountain Time.
 
 - **Example 2:**
-  - **Day 1:** Total Daily supply = 50M tokens, with 40M claimed.
-  - **Day 2:** Max daily supply limit = 50M + 40M (previous day’s claims).
+  - **Day 1:** Total Daily Supply = 50M tokens, with 40M claimed.
+  - **Day 2:** Max Daily Supply Limit = 50M + 40M (previous day’s claims).
 
 #### Reset Mechanism:
 If fewer tokens are claimed than available in a day, the difference is not carried forward. Daily limits reset every day at 12:00 AM Mountain Time.
@@ -82,26 +85,32 @@ Mint on demand if claims exceed the current supply available but stay within the
 
 2. **Claiming Above Total Daily Supply:**
    - **Previous day claims:** 40M tokens.
-   - **Total Daily Supply (Current available tokens):** 40M.
+   - **Total Daily Supply:** 40M.
+   
    - **Base supply:** 50M.
    - **Maximum daily supply:** 50M + 40M = 90M.
-   -  **Total Daily Supply (Current available tokens):** 50M.
+   -  **Total Daily Supply:** 50M.
+   
    - **Contributor wants to claim:** 60M.
    - **Minted Tokens:** 60M - 50M = 10M additional tokens.
    - **Claimed Tokens:** 60M.
-   - **Total Daily Supply (Current available tokens):** 0M.
+   - **Total Daily Supply:** 0M.
   
 3. **Claiming Above Total Daily Supply:**
    - **Previous day claims:** 60M tokens.
-   - **Total Daily Supply (Current available tokens):** 0M.
+   - **Total Daily Supply:** 0M.
+     
    - **Base supply:** 50M.
    - **Minted Tokens:** 50M (Base supply) - 0M (Current available tokens) = 50M additional tokens.
-   - **Total Daily Supply (Current available tokens):** 50M.
+   - **Total Daily Supply:** 50M.
+     
    - **Maximum daily supply:** 50M (Base supply) + 60M (Previous day claims) = 110M.
-   -  **Total Daily Supply (Current available tokens):** 50M.
+   -  **Total Daily Supply:** 50M.
+   
    - **Contributor wants to claim:** 60M.
    - **Minted Tokens:** 60M - 50M = 10M additional tokens.
-   - **Total Daily Supply (Current available tokens):** 60M.
+   - **Total Daily Supply:** 60M.
+     
    - **Claimed Tokens:** 60M.
    - **Total Daily Supply (Current available tokens):** 0M.
 
