@@ -79,8 +79,10 @@ If the requested amount exceeds the daily limit, only the available amount is pr
 ### 4. Minting Mechanism
 
 #### Purpose:
-Ensures the daily base supply (50M tokens) is maintained.
-Mint on demand if claims exceed the current supply available but stay within the maximum daily supply.
+- **Two Ways of Minting:**
+  - Ensures the daily **Base Supply** (50M tokens) is maintained:
+    - The smart contract will mint up to 50M tokens (**Base Supply**), if the **Total Supply** is below the **Base Supply** at 12:00 AM Mountain Time.
+  - Mint on demand if claims exceed the current supply available but stay within the maximum daily supply.
 
 #### Minting Formula 1 (Maintaining 50M daily supply):
 - **Minted Tokens** = **Base Supply (50M)** - **Total Daily Supply**.
