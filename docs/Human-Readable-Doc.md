@@ -82,12 +82,12 @@ If the requested amount exceeds the daily limit, only the available amount is pr
 - **Two Ways of Minting:**
   - Ensures the **Total Supply** is maintained with **Base Supply** (50M tokens) amount:
     - The smart contract will mint up to 50M tokens (**Base Supply**), if the **Total Supply** is below the **Base Supply** at 12:00 AM Mountain Time.
-  - Mint on demand if claims exceed the current supply available but stay within the maximum daily supply.
+  - Mint on demand if **Contributor's Claim Amount** exceed the **Total Supply** (current supply available) but stay within the **Max Daily Supply Limit**.
 
 #### Minting Formula 1 (Maintaining 50M daily supply):
 - **Minted Tokens** = **Base Supply (50M)** - **Total Daily Supply**.
 
-#### Minting Formula 2 (Mint on demand by contributor's claim):
+#### Minting Formula 2 (Mint on demand by Contributor's Claim Amount):
 - **Minted Tokens** = Difference between **Contributor's Claim Amount** and **Total Daily Supply** within **Max Daily Supply Limit**.
 
 #### Examples:
