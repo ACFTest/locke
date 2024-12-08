@@ -97,7 +97,7 @@ Mint on demand if claims exceed the current supply available but stay within the
    - **Base supply:** 50M.
    - **Minted Tokens:** 50M (Base supply) - 0M (Current available tokens) = 50M additional tokens.
    - **Total Daily Supply:** 50M.
-   - **Maximum daily supply:** 50M (Base supply) + 60M (Previous day claims) = 90M.
+   - **Maximum daily supply:** 50M (Base supply) + 60M (Previous day claims) = 110M.
    -  **Total Daily Supply:** 50M.
    - **Contributor wants to claim:** 60M.
    - **Minted Tokens:** 60M - 50M = 10M additional tokens.
