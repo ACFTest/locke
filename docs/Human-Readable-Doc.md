@@ -39,15 +39,15 @@ If fewer tokens are claimed than available in a day, the difference is not carri
 
 ---
 
-### 2. Contributor Management
+### 2. Contributor Management: Contributor's identifier Account
 
 #### Identification:
 Contributors are identified by an identifier (e.g., name, registration number) linked to a maximum of 3 wallet eth addresses.
 
 #### Immutable Data for Contributors Only:
 - Contributors cannot update or delete their identifiers or wallets to prevent fraud.
-- Owner of the smart contract (CryptoFed) can add, update Contributor's Identifier Account including 1-3 wallet eth addresses.
-  - Contributor's identifier Account must have at least 1 wallet eth addresses for the account to be established or added.
+- Owner of the smart contract (CryptoFed) can add, update **Contributor's Identifier Account** including 1-3 wallet eth addresses.
+  - **Contributor's identifier Account** must have at least 1 wallet eth addresses for the account to be established or added.
 
 #### Token Allocation:
 Tokens allocated to a contributor are shared across their registered wallets.
