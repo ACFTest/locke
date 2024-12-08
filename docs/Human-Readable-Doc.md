@@ -9,7 +9,7 @@ The total supply of Locke tokens is capped at **1 trillion tokens**, ensuring a 
 
 #### Max Daily Supply Limit:
 - **Max Daily Supply Limit = Base Supply** + **Previous Day Claims:**
-  - **Base Supply:** 50 million (or 50M) Locke tokens are available daily.
+  - **Base Supply:** 50 million (or 50M) Locke tokens should be available daily.
   - **Previous Day Claims:** Locke tokens claimed the previous day are added to the base supply.
 
 #### Total Daily Supply:
