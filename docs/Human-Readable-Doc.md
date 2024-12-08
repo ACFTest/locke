@@ -47,7 +47,7 @@ Contributors are identified by an identifier (e.g., name, registration number) l
 #### Immutable Data for Contributors Only:
 - Contributors cannot update or delete their identifiers or wallets to prevent fraud.
 - Owner of the smart contract (CryptoFed) can add, update **Contributor's Identifier Account** including 1-3 wallet eth addresses.
-  - **Contributor's Identifier Account** must have at least 1 wallet eth addresses for the account to be established or added.
+  - **Contributor's Identifier Account** must have at least 1 wallet eth address for the account to be established or added.
 
 #### Token Allocation:
 Tokens allocated to a contributor are shared across their registered wallets.
