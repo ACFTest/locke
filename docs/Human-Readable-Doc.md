@@ -99,7 +99,7 @@ If the requested amount exceeds the daily limit, only the available amount is pr
    - **Previous day claims:** 40M tokens.
    - **Total Daily Supply:** 40M. 
    ####
-   - **Base Supply:** 50M.
+   - **Base Supply:** 50M. (Note: This is not minted, just a capacity or a rule to mint that amount)
    - **Max Daily Supply Limit:** 50M (Base Supply) + 40M (Previous Day Claims) = 90M.
    - **Total Daily Supply:** 50M.
    ####
