@@ -22,11 +22,21 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
 
 ## Deployment Parameters
 
-- **maxCapacitySupply**: 1,000,000 LOCKE tokens as the maximum capacity
-- **initialSupply**: 500,000 LOCKE tokens as the initial supply
-- **totalSupply**: is also the initialSupply of 500,000 LOCKE tokens. This is also called the current LOCKE token supply.
----
+- **Token.sol**:
 
+   - **maxCapacitySupply**: 1,000,000,000,000 (1 trillion) LOCKE tokens as the maximum supply allowed on the Ethereum Protocol under ERC-20 standards.
+
+   - **initialSupply**: 50,000,000 LOCKE tokens minted to the owner's wallet during deployment. This represents the initial circulating supply.
+
+   - **totalSupply**: is also the initialSupply of 50,000,000 LOCKE tokens. This is also called the current LOCKE token supply.
+
+- **Distribution.sol**:
+
+   - **maxCurrentDailySupply**: Managed in `Distribution.sol`. Calculated dynamically as the base daily supply (50,000,000 LOCKE tokens) plus the total claims from the previous day. This value is accessed by `Token.sol` to enforce minting limits.
+
+   - **deploymentTimestamp**: The timestamp recorded when the `Distribution.sol` contract is deployed. Used to calculate the current day (`dayCounter`) dynamically.
+
+   - **dayCounter**: Dynamically calculated in `Distribution.sol` based on the elapsed time since `deploymentTimestamp`, adjusted for Mountain Time (MT) with predefined daylight savings rules. Used to track the number of days and account for skipped days.
 
 ## Self Audit
 
