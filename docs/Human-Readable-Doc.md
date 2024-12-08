@@ -21,7 +21,7 @@ The total supply of Locke tokens is capped at **1 trillion tokens**, ensuring a 
   - **Day 2:** Max daily supply limit = 50M + 40M (previous day’s claims).
 
 #### Reset Mechanism:
-If fewer tokens are claimed than available in a day, the difference is not carried forward. Daily limits reset every day at 11:59 PM Mountain Time.
+If fewer tokens are claimed than available in a day, the difference is not carried forward. Daily limits reset every day at 12:00 AM Mountain Time.
 
 ---
 
