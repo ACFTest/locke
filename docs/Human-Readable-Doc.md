@@ -85,12 +85,12 @@ Mint on demand if claims exceed the current supply available but stay within the
 
 2. **Claiming Above Total Daily Supply:**
    - **Previous day claims:** 40M tokens.
-   - **Total Daily Supply:** 40M.
-   
+   - **Total Daily Supply:** 40M. 
+   ####
    - **Base supply:** 50M.
-   - **Maximum daily supply:** 50M + 40M = 90M.
+   - **Maximum daily supply:** 50M (Base supply) + 40M (Previous day claims) = 90M.
    -  **Total Daily Supply:** 50M.
-   
+   ####
    - **Contributor wants to claim:** 60M.
    - **Minted Tokens:** 60M - 50M = 10M additional tokens.
    - **Claimed Tokens:** 60M.
@@ -99,18 +99,18 @@ Mint on demand if claims exceed the current supply available but stay within the
 3. **Claiming Above Total Daily Supply:**
    - **Previous day claims:** 60M tokens.
    - **Total Daily Supply:** 0M.
-     
+   ####  
    - **Base supply:** 50M.
    - **Minted Tokens:** 50M (Base supply) - 0M (Current available tokens) = 50M additional tokens.
    - **Total Daily Supply:** 50M.
-     
+   ####  
    - **Maximum daily supply:** 50M (Base supply) + 60M (Previous day claims) = 110M.
    -  **Total Daily Supply:** 50M.
-   
+   ####
    - **Contributor wants to claim:** 60M.
    - **Minted Tokens:** 60M - 50M = 10M additional tokens.
    - **Total Daily Supply:** 60M.
-     
+   ####  
    - **Claimed Tokens:** 60M.
    - **Total Daily Supply (Current available tokens):** 0M.
 
