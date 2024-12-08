@@ -12,13 +12,16 @@
 The total supply of Locke tokens is capped at **1 Trillion tokens** or (1T), ensuring a fixed limit on the total number of tokens that can ever exist on the Ethereum Blockchain.
 
 #### Max Daily Supply Limit:
+This is the maximum daily supply amount of Locke Tokens that the smart contract can mint up per day.
+
 - **Max Daily Supply Limit = Base Supply** + **Previous Day Claims:**
   - **Base Supply:** 50 million (or 50M) Locke tokens should be available daily.
     - Note: This is not minted, just a capacity or a rule to mint that amount
   - **Previous Day Claims:** Locke tokens claimed the previous day are added to the base supply.
 
 #### Total Daily Supply:
-  - **Total Daily Supply:** Current available Locke tokens on the day. Amount ranges from 0M to Max Daily Supply Limit.
+Current available Locke tokens on the day. Amount ranges from 0M to Max Daily Supply Limit.
+
   - **Initial Supply:** Initially mint the number of Locke tokens on deployment.
     - **Initial Amount:** 50 million (or 50M) Locke tokens or **Base Supply**. Upon minting, this will automatically update **Total Daily Supply**.
 
