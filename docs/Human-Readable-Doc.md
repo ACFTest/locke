@@ -80,7 +80,7 @@ If the requested amount exceeds the daily limit, only the available amount is pr
 
 #### Purpose:
 - **Two Ways of Minting:**
-  - Ensures the daily **Base Supply** (50M tokens) is maintained:
+  - Ensures the **Total Supply** is maintained with **Base Supply** (50M tokens) amount:
     - The smart contract will mint up to 50M tokens (**Base Supply**), if the **Total Supply** is below the **Base Supply** at 12:00 AM Mountain Time.
   - Mint on demand if claims exceed the current supply available but stay within the maximum daily supply.
 
