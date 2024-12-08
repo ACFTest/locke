@@ -1,4 +1,4 @@
-# Token Smart Contract Documentation (Token.sol)
+# Token Smart Contract Documentation (Token.sol) (Human Readable)
 
 ## Key Features
 
