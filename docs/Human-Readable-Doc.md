@@ -8,8 +8,9 @@
 The total supply of Locke tokens is capped at **1 trillion tokens**, ensuring a fixed limit on the total number of tokens that can ever exist on the Ethereum Blockchain.
 
 #### Max Daily Supply Limit:
-- **Base Supply:** 50 million Locke tokens are available daily.
-- **Previous Day Claims:** Tokens claimed the previous day are added to the base supply.
+- **Max Daily Supply Limit = Base Supply:** + **Previous Day Claims:**
+  - **Base Supply:** 50 million Locke tokens are available daily.
+  - **Previous Day Claims:** Tokens claimed the previous day are added to the base supply.
 
 #### Examples:
 - **Example 1:**
@@ -72,7 +73,7 @@ Ensures the daily base supply (50M tokens) is maintained.
 Mint on demand if claims exceed the current supply available but stay within the maximum daily supply.
 
 #### Minting Formula 1 (Maintaining 50M daily supply):
-**Minted Tokens = Base Supply (50M) - Current Available Tokens.**
+- **Minted Tokens = Base Supply (50M) - Current Available Tokens.**
 
 #### Examples:
 1. **Day Start:** 40M tokens available.
@@ -109,19 +110,19 @@ The owner can manually override DST settings if needed.
 
 ## Additional Examples
 
-### Daily Token Supply Limit Calculation:
+### Maximum Daily Token Supply Limit Calculation:
 - **Day 1:**
   - Base Supply = 50M.
   - No previous day claims (first day).
-  - **Total Daily Supply = 50M.**
+  - **Maximum Daily Supply Limit = 50M.**
 - **Day 2:**
   - Base Supply = 50M.
   - Previous Day Claims = 15M.
-  - **Total Daily Supply = 50M + 15M = 65M.**
+  - **Maximum Daily Supply Limit = 50M + 15M = 65M.**
 - **Day 3:**
   - Base Supply = 50M.
   - Previous Day Claims = 20M.
-  - **Total Daily Supply = 50M + 20M = 70M.**
+  - **Maximum Daily Supply Limit = 50M + 20M = 70M.**
 
 ### Token Claim by Contributor:
 - **Contributor Allocation:** 30 tokens across 3 wallets.
