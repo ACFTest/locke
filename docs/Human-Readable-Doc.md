@@ -129,15 +129,43 @@ If the requested amount exceeds the calculated daily limit, only the available a
 
 ### 5. Daylight Savings and Timing
 
-#### Time Adjustments:
-The contract adjusts for Mountain Time (MT) and accounts for Daylight Savings Time (DST).
+Ethereum uses **UTC timestamps** by default because it is a global standard and simplifies blockchain operations. Mountain Time (MT) tracking, including **Daylight Savings Time (DST)** adjustments, is implemented by converting UTC to MT.
 
-#### Manual Override:
-The owner can manually override DST settings if needed.
+#### **How to Convert UTC to Mountain Time**
 
-#### Example:
-- Current day ends at 11:59 PM MT.
-- Next day starts at midnight MT.
+Mountain Time operates on two offsets:
+- **Standard Time:** UTC-7
+- **DST (Summer):** UTC-6
+
+To convert:
+1. If DST is active, subtract **6 hours** from UTC.
+2. If not, subtract **7 hours**.
+3. The contract includes a **manual override** for DST settings, allowing adjustments to account for changes or unexpected transitions.
+
+#### **Calculating `daysElapsed`**
+
+`daysElapsed` measures full days between two timestamps based on Mountain Time:
+
+##### **Formula**:
+```
+daysElapsed = (toMountainTime(currentTimestamp) / 1 day) - (toMountainTime(lastClaimTimestamp) / 1 day)
+```
+
+##### **Steps**:
+1. Convert UTC timestamps to MT.
+2. Divide each by 1 day (86400 seconds).
+3. Subtract to get the difference.
+
+##### **Example**
+- **Last Total Previous Claim Timestamp:** November 2, 2024, 11:00 PM UTC → November 2, 2024, 5:00 PM MDT (Mountain Daylight Time).
+- **Current Claim Timestamp:** November 4, 2024, 2:00 AM UTC → November 3, 2024, 7:00 PM MST (Mountain Standard Time).
+- **Result:** `daysElapsed = 2`.
+- **Total Previous Day Claims = 0 (reset due to 1 skipped Day)**.
+- **Max Daily Claim Limit:** 50M (Base Claim Limit) + 0 (Total Previous Day Claims) = 50M.
+
+#### **Key Points**
+- **Mountain Time Conversion:** Adjusts UTC to local time (-7 or -6 hours).
+- **`daysElapsed` Calculation:** Ensures accurate tracking of daily operations based on Mountain Time.
 
 ---
 
