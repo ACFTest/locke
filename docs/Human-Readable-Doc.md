@@ -1,4 +1,4 @@
-# Token Smart Contract Documentation (Token.sol) (Human Readable)
+# Token Smart Contract Documentation (Token.sol)
 
 ## Key Features
 
@@ -11,31 +11,29 @@
 #### Maximum Supply:
 The total supply of Locke tokens is capped at **1 Trillion tokens** or (1T), ensuring a fixed limit on the total number of tokens that can ever exist on the Ethereum Blockchain.
 
-#### Max Daily Supply Limit:
-This is the maximum daily supply amount of Locke Tokens that the smart contract **can** mint up to per day.
+#### Max Daily Claim Limit:
+The **Max Daily Claim Limit** determines the maximum number of Locke Tokens that contributors can claim in a single day. This value is recalculated dynamically based on the **Base Claim Limit** and the **Total Previous Day Claims.**
 
-- **Max Daily Supply Limit = Base Supply** + **Previous Day Claims:**
-  - **Base Supply:** 50 million (or 50M) Locke tokens should be available daily.
-    - Note: This is not minted, just a capacity or a rule to mint that amount
-  - **Previous Day Claims:** Locke tokens claimed the previous day are added to the base supply.
-
-#### Total Daily Supply:
-Current available Locke tokens on the day. Amount ranges from 0M to Max Daily Supply Limit.
-
-  - **Initial Supply:** Initially mint the number of Locke tokens on deployment.
-    - **Initial Amount:** 50 million (or 50M) Locke tokens or **Base Supply**. Upon minting, this will automatically update **Total Daily Supply**.
+- **Formula:**
+  - **Max Daily Claim Limit = Base Claim Limit (50M)** + **Total Previous Day Claims**
+- **Base Claim Limit:** 50 million (50M) Locke tokens are available as a fixed capacity per day.
+- **Total Previous Day Claims:** The actual number of tokens claimed during the previous day.
 
 #### Examples:
 - **Example 1:**
-  - **Day 1:** Total Daily Supply = 50M tokens (Base Supply initially mint on deployment), with 40M claimed.
-  - **Day 2:** Total Daily Supply = 10M left; to maintain 50M tokens, 40M tokens will be automatically minted at 12:00 AM Mountain Time.
+  - **Day 1:** Contributor claims 10M tokens.
+    - **Total Previous Day Claims:** 10M.
+    - **Max Daily Claim Limit (Day 2):** 50M (Base Claim Limit) + 10M = 60M.
 
 - **Example 2:**
-  - **Day 1:** Total Daily Supply = 50M tokens, with 40M claimed.
-  - **Day 2:** Max Daily Supply Limit = 50M (Base Supply) + 40M (Previous Day Claims).
+  - **Day 2:** Contributor claims 0M tokens.
+    - **Total Previous Day Claims:** 0M.
+    - **Max Daily Claim Limit (Day 3):** 50M (Base Claim Limit) + 0M = 50M.
 
-#### Reset Mechanism:
-If fewer tokens are claimed than available in a day, the difference is not carried forward. Daily limits reset every day at 12:00 AM Mountain Time.
+- **Example 3:**
+  - **Day 3:** Contributor claims 25M tokens.
+    - **Total Previous Day Claims:** 25M.
+    - **Max Daily Claim Limit (Day 4):** 50M (Base Claim Limit) + 25M = 75M.
 
 ---
 
@@ -63,15 +61,15 @@ Tokens allocated to a contributor are shared across their registered wallets.
 ### 3. Claiming Tokens
 
 #### Claim Limits:
-Contributors can claim tokens daily, subject to limits.
+Contributors can claim tokens dynamically, subject to the current calculated **Max Daily Claim Limit.**
 
 #### Partial Claims:
-If the requested amount exceeds the daily limit, only the available amount is processed.
+If the requested amount exceeds the calculated daily limit, only the available amount is processed.
 
 #### Example:
-- **Daily limit:** 75M tokens.
-- **Request:** 80M tokens.
-- **Processed:** 75M tokens. Remaining 5M is unfilled and cannot be carried over.
+- **Max Daily Claim Limit:** 80M tokens.
+- **Request:** 90M tokens.
+- **Processed:** 80M tokens. Remaining 10M is unfilled and cannot be carried over.
 
 #### Output Messages:
 - **Full Claim:**
@@ -84,52 +82,48 @@ If the requested amount exceeds the daily limit, only the available amount is pr
 ### 4. Minting Mechanism
 
 #### Purpose:
-- **Two Ways of Minting:**
-  1. Ensures the **Total Supply** is maintained with **Base Supply** (50M tokens) amount:
-      - The smart contract will mint up to 50M tokens (**Base Supply**), if the **Total Supply** is below the **Base Supply** at 12:00 AM Mountain Time.
-  2. Mint on demand if **Contributor's Claim Amount** exceed the **Total Supply** (current supply available) but stay within the **Max Daily Supply Limit**.
+- Tokens are minted directly to contributors’ selected Ethereum wallet addresses on demand.
+- The minting process ensures that tokens are created only when contributors claim them, complying with the **Max Daily Claim Limit**.
+- **Total Token Supply:**
+  - Tracks the total number of tokens minted so far.
+  - **Purpose:**
+    1. **ERC-20 Compliance:** The `totalSupply()` function is required by the ERC-20 standard, providing transparency about the total number of tokens in circulation.
+    2. **Max Supply Enforcement:** Ensures the total tokens minted never exceed the defined maximum limit (e.g., 1 trillion tokens).
+    
+#### Dynamic Calculation of Total Previous Day Claims:
+- The **`daysElapsed`** value determines whether the **Total Previous Day Claims** should be carried forward or reset to `0` based on the time elapsed since the last claim or mint.
 
-#### Minting Formula 1 (Maintaining 50M daily supply):
-- **Minted Tokens** = **Base Supply (50M)** - **Total Daily Supply**.
+- **Formula to Determine Days Elapsed:**
+  - **daysElapsed = (Current Time - Last Claim Time) / 1 Day**
 
-#### Minting Formula 2 (Mint on demand by Contributor's Claim Amount):
-- **Minted Tokens** = Difference between **Contributor's Claim Amount** and **Total Daily Supply** within **Max Daily Supply Limit**.
+- **Status Labels for `daysElapsed`:**
+  - **`daysElapsed == 0 (status: Same Day)`**: The current day is the same as the last claim day, so the **Total Previous Day Claims** stay unchanged.
+  - **`daysElapsed == 1 (status: Consecutive Day)`**: The current day is directly after the last claim day; the **Total Previous Day Claims** remain valid.
+  - **`daysElapsed > 1 (status: Skipped Days)`**: Skipped days occurred; the **Total Previous Day Claims** are reset to `0` because no claims occurred during those days.
 
 #### Examples:
-1. **Day Start (Total Daily Supply):** 40M tokens available (already minted before).
-   - **Minting Required:** 10M tokens.
-   - **Result (Total Daily Supply):** 50M tokens available for claims during the day.
 
-2. **Claiming Above Total Daily Supply:**
-   - **Previous day claims:** 40M tokens.
-   - **Total Daily Supply:** 40M. 
-   ####
-   - **Base Supply:** 50M. (Note: This is not minted, just a capacity or a rule to mint that amount)
-   - **Max Daily Supply Limit:** 50M (Base Supply) + 40M (Previous Day Claims) = 90M.
-   - **Total Daily Supply:** 50M.
-   ####
-   - **Contributor wants to claim:** 60M.
-   - **Minted Tokens:** 60M (Contributor's Claim Amount) - 50M (Total Daily Supply) = 10M additional tokens.
-   - **Claimed Tokens:** 60M.
-   - **Total Daily Supply:** 0M.
-  
-3. **Claiming Above Total Daily Supply:**
-   - **Previous day claims:** 60M tokens.
-   - **Total Daily Supply:** 0M.
-   ####  
-   - **Base Supply:** 50M. (Note: This is not minted, just a capacity or a rule to mint that amount)
-   - **Minted Tokens:** 50M (Base Supply) - 0M (Current available tokens) = 50M additional tokens.
-   - **Total Daily Supply:** 50M.
-   ####  
-   - **Max Daily Supply Limit:** 50M (Base Supply) + 60M (Previous Day Claims) = 110M.
-   - **Total Daily Supply:** 50M.
-   ####
-   - **Contributor wants to claim:** 60M.
-   - **Minted Tokens:** 60M (Contributor's Claim Amount) - 50M (Total Daily Supply) = 10M additional tokens.
-   - **Total Daily Supply:** 60M.
-   ####  
-   - **Claimed Tokens:** 60M.
-   - **Total Daily Supply:** 0M.
+##### Example 1: Same Day
+- **Day 1 Claims:** 40M tokens in the morning.
+- **Day 1 Claims (Afternoon):** Contributor claims another 20M tokens.
+  - **daysElapsed = 0 (status: Same Day)**.
+  - **Total Previous Day Claims = 0 (as no claims occurred on Day 0)**.
+  - **Max Daily Claim Limit:** 50M (Base Claim Limit) + 0 (Total Previous Day Claims) = 50M.
+
+##### Example 2: Consecutive Day
+- **Day 1 Claims:** 30M tokens.
+- **Day 2 Claims:** 15M tokens.
+  - **daysElapsed = 1 (status: Consecutive Day)**.
+  - **Total Previous Day Claims = 30M (from Day 1)**.
+  - **Max Daily Claim Limit:** 50M (Base Claim Limit) + 30M (Total Previous Day Claims) = 80M.
+
+##### Example 3: Skipped Days
+- **Day 1 Claims:** 25M tokens.
+- **Day 2-4:** No claims.
+- **Day 5 Claims:** 20M tokens.
+  - **daysElapsed = 4 (status: Skipped Days)**.
+  - **Total Previous Day Claims = 0 (reset due to skipped Days 2-4)**.
+  - **Max Daily Claim Limit:** 50M (Base Claim Limit) + 0 (Total Previous Day Claims) = 50M.
 
 ---
 
@@ -141,9 +135,6 @@ The contract adjusts for Mountain Time (MT) and accounts for Daylight Savings Ti
 #### Manual Override:
 The owner can manually override DST settings if needed.
 
-#### Next Day Calculation:
-**Cutoff Time:** 11:59 PM MT.
-
 #### Example:
 - Current day ends at 11:59 PM MT.
 - Next day starts at midnight MT.
@@ -152,19 +143,19 @@ The owner can manually override DST settings if needed.
 
 ## Additional Examples
 
-### Maximum Daily Token Supply Limit Calculation:
+### Max Daily Claim Limit Calculation:
 - **Day 1:**
-  - Base Supply = 50M.
+  - Base Claim Limit = 50M.
   - No previous day claims (first day).
-  - **Maximum Daily Supply Limit = 50M.**
+  - **Max Daily Claim Limit = 50M.**
 - **Day 2:**
-  - Base Supply = 50M.
-  - Previous Day Claims = 15M.
-  - **Maximum Daily Supply Limit = 50M + 15M = 65M.**
+  - Base Claim Limit = 50M.
+  - Total Previous Day Claims = 15M.
+  - **Max Daily Claim Limit = 50M + 15M = 65M.**
 - **Day 3:**
-  - Base Supply = 50M.
-  - Previous Day Claims = 20M.
-  - **Maximum Daily Supply Limit = 50M + 20M = 70M.**
+  - Base Claim Limit = 50M.
+  - Total Previous Day Claims = 20M.
+  - **Max Daily Claim Limit = 50M + 20M = 70M.**
 
 ### Token Claim by Contributor:
 - **Contributor Allocation:** 30 tokens across 3 wallets.
@@ -194,4 +185,4 @@ The owner can manually override DST settings if needed.
 
 ## Summary
 
-The **Token.sol** smart contract combines advanced token minting, daily supply limits, contributor management, and streamlined claiming logic. It ensures fairness, security, and efficiency in token distribution while maintaining compliance with pre-defined limits and adjusting for mountain time with daylight savings logic.
+The **Token.sol** smart contract combines advanced token minting, dynamic claim limit calculations, contributor management, and streamlined claiming logic. Tokens are minted only on demand when contributors claim them, and the contract dynamically calculates the **Max Daily Claim Limit** based on the **Base Claim Limit** and the **Total Previous Day Claims.**
