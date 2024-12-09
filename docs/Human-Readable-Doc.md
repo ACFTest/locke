@@ -1,5 +1,9 @@
 # Token Smart Contract Documentation (Token.sol)
 
+## Overview
+
+This document explains how the smart contract dynamically manages Locke Token distribution to enforce daily claim limits efficiently. It includes examples, definitions, and details, as well as handling caching, transitions, skipped days, partial claims, and gas fee responsibilities.
+
 ## Key Features
 
 ### 1. Token Supply Limits
@@ -12,10 +16,12 @@
 The total supply of Locke tokens is capped at **1 Trillion tokens** or (1T), ensuring a fixed limit on the total number of tokens that can ever exist on the Ethereum Blockchain.
 
 #### Max Daily Claim Limit:
-The **Max Daily Claim Limit** determines the maximum number of Locke Tokens that contributors can claim in a single day. This value is recalculated dynamically based on the **Base Claim Limit** and the **Total Previous Day Claims.**
+The **Max Daily Claim Limit** determines the maximum number of Locke Tokens that contributors can claim in a single day. This value is recalculated dynamically based on the **Base Claim Limit** and the **Total Previous Day Claims.** This ensures contributors can claim a fair amount each day. It is calculated using a fixed, algorithmic formula that scales predictably with the claims from the previous day.
 
 - **Formula:**
-  - **Max Daily Claim Limit = Base Claim Limit (50M)** + **Total Previous Day Claims**
+  ```
+  - Max Daily Claim Limit = Base Claim Limit (50M) + Total Previous Day Claims
+  ```
 - **Base Claim Limit:** 50 million (50M) Locke tokens are available as a fixed capacity per day.
 - **Total Previous Day Claims:** The actual number of tokens claimed during the previous day.
 
@@ -63,19 +69,145 @@ Tokens allocated to a contributor are shared across their registered wallets.
 #### Claim Limits:
 Contributors can claim tokens dynamically, subject to the current calculated **Max Daily Claim Limit.**
 
+#### Same Day Claims:
+- **How it works**: 
+   - Multiple claims made on the same day are added to the **Total Current Day Claims**.
+   - The **Total Previous Day Claims** remains **cached** and is not updated during the same day.
+
+#### New Day Transition:
+- **How it works**: 
+   - When a claim is made on a new day:
+     - The **Total Current Day Claims** is copied to the **Total Previous Day Claims**.
+     - The **Total Current Day Claims** is reset to 0.
+   - This update happens only once per day during the first claim of the new day.
+
+#### Skipped Days:
+- **How it works**: 
+   - If no claims occur for one or more days:
+     - The **Total Previous Day Claim** is updated to 0 during the next claim, dynamically reflecting no claims for skipped days.
+     - The **Total Current Day Claim** resets for the new day.
+    
 #### Partial Claims:
-If the requested amount exceeds the calculated daily limit, only the available amount is processed.
+- **How it works**: 
+   - If a claim exceeds the Max Daily Claim Limit, only the allowable amount is processed.
+   - Unfulfilled claims must be manually re-requested. They are not carried over to the next day automatically.
 
 #### Example:
 - **Max Daily Claim Limit:** 80M tokens.
 - **Request:** 90M tokens.
 - **Processed:** 80M tokens. Remaining 10M is unfilled and cannot be carried over.
 
-#### Output Messages:
+##### Output Messages:
 - **Full Claim:**
   - “Congratulations, your claim of X tokens is successful. You have Y tokens remaining.”
 - **Partial Claim:**
   - “Partial claim processed: X tokens claimed. Y tokens could not be processed due to daily limits.”
+
+#### More Examples:
+
+- #### A. Transitioning Total Current Day Claim to Total Previous Day Claim
+  - **Scenario**:
+    - **Date**: November 2, 2024 (Mountain Time).
+    - **Base Claim Limit**: 50M tokens.
+    - **Previous Day Claims**: 30M tokens.
+    - **Max Daily Claim Limit**:
+      ```
+      50M (Base) + 30M = 80M
+      ```
+
+  **Process**:
+  - A contributor claims 40M tokens during the day:
+    - Add to **Total Current Day Claim**: `{date: November 2, value: 40M}`.
+    - **Total Previous Day Claim** remains cached: `{date: November 1, value: 30M}`.
+  - The same contributor claims another 20M tokens later in the day:
+    - Add to **Total Current Day Claim**: `{date: November 2, value: 60M}`.
+  - On November 3:
+    - The first claim triggers the update:
+      - **Total Previous Day Claim** is updated with the value of **Total Current Day Claim**:
+        ```
+        {date: November 2, value: 60M}
+        ```
+      - **Total Current Day Claim** is reset:
+        ```
+        {date: November 3, value: 0}
+        ```
+
+  **Result**:
+  - **Total Previous Day Claim** is updated to reflect the total claims made on November 2.
+  - **Total Current Day Claim** starts fresh for November 3.
+
+- #### B. Fully Claimed Day
+  **Date**: November 2, 2024 (Mountain Time).
+  - **Scenario**:
+    - Base Claim Limit = 50M tokens.
+    - Total Previous Day Claims = 0M tokens.
+    - **Max Daily Claim Limit**:
+      ```
+      50M + 0M = 50M
+      ```
+  
+  **Process**:
+  1. A contributor requests a claim for **50M tokens**, which matches the **Max Daily Claim Limit** for November 2.
+     - **Result**:
+       - **Total Current Day Claim**: `{date: November 2, value: 50M}`.
+       - No more claims are allowed for November 2 since the **Max Daily Claim Limit** has been reached.
+  
+  2. **On November 3**:
+     - The first claim of the day triggers the update:
+       - **Total Previous Day Claim** updates to:
+         ```
+         {date: November 2, value: 50M}
+         ```
+       - **Total Current Day Claim** resets to:
+         ```
+         {date: November 3, value: 0}
+         ```
+     - **Max Daily Claim Limit for November 3**:
+       ```
+       50M (Base) + 50M (Previous Day Claims) = 100M
+       ```
+  
+  **Result**:
+  - November 3 begins with a Max Daily Claim Limit of **100M tokens**, reflecting the full claims made on November 2.
+
+- #### C. Skipped Days
+  **Scenario**:
+    - Last claim: November 2, 2024 (40M tokens).
+    - No claims on November 3 or 4, 2024.
+    - First claim on November 5, 2024 (50M tokens).
+  
+  **Process**:
+  - On November 5, the system detects skipped days:
+    - **Total Previous Day Claim** is updated once:
+      ```
+      {date: November 4, value: 0}
+      ```
+    - **Total Current Day Claim** is reset:
+      ```
+      {date: November 5, value: 0}
+      ```
+  - Process the new claim:
+    - Add 50M to **Total Current Day Claim**: `{date: November 5, value: 50M}`.
+  - **Max Daily Claim Limit for November 5**:
+    ```
+    50M (Base) + 0M (Previous Day Claims) = 50M
+    ```
+  
+  **Result**:
+  - Skipped days dynamically reset the **Total Previous Day Claim** to 0.
+
+#### Key Considerations:
+
+##### Efficient Updates:
+- The **Total Previous Day Claim** is updated only once per day, during the first claim of a new day or after skipped days.
+- Cached for multiple claims on the same day.
+
+##### Gas Responsibility:
+- Contributors must pay gas fees for each claim or minting operation.
+- The CryptoFed or the owner of the smart contract does not cover gas fees.
+
+##### Handling Partial Claims:
+- Unfulfilled amounts are not automatically carried forward. Contributors must re-request their claim on subsequent days.
 
 ---
 
