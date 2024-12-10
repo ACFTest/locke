@@ -20,7 +20,7 @@ The **Max Daily Claim Limit** determines the maximum number of Locke Tokens that
 
 - **Formula:**
   ```
-  - Max Daily Claim Limit = Base Claim Limit (50M) + Total Previous Day Claims
+  Max Daily Claim Limit = Base Claim Limit (50M) + Total Previous Day Claims
   ```
 - **Base Claim Limit:** 50 million (50M) Locke tokens are available as a fixed capacity per day.
 - **Total Previous Day Claims:** The actual number of tokens claimed during the previous day.
