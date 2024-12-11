@@ -72,11 +72,11 @@ The **Get Contributor Claim Information (`getContributorClaimInfo`)** function r
 3. **Wallet-Specific Claim Information**:
    - The number of wallets registered for the contributor.
    - The number of tokens already claimed for each wallet.
-4. **Your Claim Allocation**: The maximum tokens allocated to the contributor based on their registration details.
-5. **Your Estimated Available Allocated Claim**:
+4. **Claim Allocation**: The maximum tokens allocated to the contributor based on their registration details.
+5. **Current Estimated Available Allocated Claim**:
    - Defined as the minimum of the contributor's allocation and the remaining system-wide availability:
      ```
-     Estimated Available Allocated Claim = Min(Your Claim Allocation, Total Remaining Day Claim)
+     Current Estimated Available Allocated Claim = Min(Your Claim Allocation, Total Remaining Day Claim)
      ```
 #### Key Notes
 
@@ -100,25 +100,25 @@ When called, the function returns the following (Output Breakdown):
    ```   
 3. **Wallet Claim Details**:
    - Number of registered wallets.
-   - Tokens claimed by each wallet.
+   - Tokens claimed by each wallet eth address.
 
    - Sample output:
    ```
-    Registered Wallets: 3
-    Tokens Claimed:
-    Wallet 1: 5M tokens
-    Wallet 2: 3M tokens
-    Wallet 3: 2M tokens
+     Registered Wallets: 3
+     Tokens Claimed:
+     Wallet 1 (0x1234...abcd): 5M tokens
+     Wallet 2 (0x5678...efgh): 3M tokens
+     Wallet 3 (0x9abc...ijkl): 2M tokens
    ```
- 4. **Your Claim Allocation** (Contributor-Specific): The maximum number of tokens allocated to the calling contributor.
+ 4. **Claim Allocation** (Contributor-Specific): The maximum number of tokens allocated to the calling contributor.
     - Sample output:
     ```
-      Your Claim Allocation: 15M tokens
+      Claim Allocation: 15M tokens
     ```
-5. **Your Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
+5. **Current Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
    - Sample output:
    ```
-      Your Estimated Available Allocated Claim: 10M tokens
+      Your Current Estimated Available Allocated Claim: 10M tokens
    ```
 
 #### Example: Contributor Claim Query
@@ -134,15 +134,14 @@ When called, the function returns the following (Output Breakdown):
       Total Remaining Day Claim: 10M tokens
       
       Contributor Information:
-      Contributor ID: XYZ123
       Registered Wallets: 3
       Tokens Claimed:
-      Wallet 1: 5M tokens
-      Wallet 2: 3M tokens
-      Wallet 3: 2M tokens
+      Wallet 1 (0x1234...abcd): 5M tokens
+      Wallet 2 (0x5678...efgh): 3M tokens
+      Wallet 3 (0x9abc...ijkl): 2M tokens
       
-      Your Claim Allocation**: 15M tokens
-      Your Estimated Available Allocated Claim**: 10M tokens
+      Claim Allocation**: 15M tokens
+      Current Estimated Available Allocated Claim**: 10M tokens
       ```
 ---
 
