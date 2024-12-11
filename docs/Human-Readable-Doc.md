@@ -94,33 +94,32 @@ When called, the function returns the following (Output Breakdown):
    ```
        Max Daily Claim Limit: 100M tokens.
    ```
-3. **Total Remaining Day Claim** (System-wide): The number of tokens still available for the day.
+2. **Total Remaining Day Claim** (System-wide): The number of tokens still available for the day.
    - Sample output:
    ```
       Total Remaining Day Claim: 10M tokens.
-   ```
-4. **Your Claim Allocation** (Contributor-Specific): The maximum number of tokens allocated to the calling contributor.
-   - Sample output:
-   ```
-      Your Claim Allocation: 15M tokens.
-   ```
-5. **Your Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
-   - Sample output:
-   ```
-      Your Estimated Available Allocated Claim: 10M tokens
-   ```
-   
-6. **Wallet Claim Details**:
+   ```   
+3. **Wallet Claim Details**:
    - Number of registered wallets.
    - Tokens claimed by each wallet.
 
-   - Example output:
+   - Sample output:
    ```
     Registered Wallets: 3
     Tokens Claimed:
     Wallet 1: 5M tokens
     Wallet 2: 3M tokens
     Wallet 3: 2M tokens
+   ```
+ 4. **Your Claim Allocation** (Contributor-Specific): The maximum number of tokens allocated to the calling contributor.
+    - Sample output:
+    ```
+      Your Claim Allocation: 15M tokens.
+    ```
+5. **Your Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
+   - Sample output:
+   ```
+      Your Estimated Available Allocated Claim: 10M tokens
    ```
 
 #### Example: Contributor Claim Query
