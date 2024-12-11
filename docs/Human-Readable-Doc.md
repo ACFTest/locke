@@ -91,7 +91,7 @@ When called, the function returns the following (Output Breakdown):
 1. **Max Daily Claim Limit** (System-wide): The maximum tokens available to claim for all contributors on the current day.
    - Sample output:
    ```
-       Max Daily Claim Limit: 100M tokens
+      Max Daily Claim Limit: 100M tokens
    ```
 2. **Total Remaining Day Claim** (System-wide): The number of tokens still available for the day.
    - Sample output:
@@ -104,11 +104,11 @@ When called, the function returns the following (Output Breakdown):
 
    - Sample output:
    ```
-     Registered Wallets: 3
-     Tokens Claimed:
-     Wallet 1 (0x1234...abcd): 5M tokens
-     Wallet 2 (0x5678...efgh): 3M tokens
-     Wallet 3 (0x9abc...ijkl): 2M tokens
+      Registered Wallets: 3
+      Tokens Claimed:
+      Wallet 1 (0x1234...abcd): 5M tokens
+      Wallet 2 (0x5678...efgh): 3M tokens
+      Wallet 3 (0x9abc...ijkl): 2M tokens
    ```
  4. **Claim Allocation** (Contributor-Specific): The maximum number of tokens allocated to the calling contributor.
     - Sample output:
@@ -129,19 +129,19 @@ When called, the function returns the following (Output Breakdown):
        
       - **Result**:
       ```
-      System-Wide Information:
-      Max Daily Claim Limit: 100M tokens
-      Total Remaining Day Claim: 10M tokens
-      
-      Contributor Information:
-      Registered Wallets: 3
-      Tokens Claimed:
-      Wallet 1 (0x1234...abcd): 5M tokens
-      Wallet 2 (0x5678...efgh): 3M tokens
-      Wallet 3 (0x9abc...ijkl): 2M tokens
-      
-      Claim Allocation**: 15M tokens
-      Current Estimated Available Allocated Claim**: 10M tokens
+          System-Wide Information:
+          Max Daily Claim Limit: 100M tokens
+          Total Remaining Day Claim: 10M tokens
+          
+          Contributor Information:
+          Registered Wallets: 3
+          Tokens Claimed:
+          Wallet 1 (0x1234...abcd): 5M tokens
+          Wallet 2 (0x5678...efgh): 3M tokens
+          Wallet 3 (0x9abc...ijkl): 2M tokens
+          
+          Claim Allocation: 15M tokens
+          Current Estimated Available Allocated Claim: 10M tokens
       ```
 ---
 
