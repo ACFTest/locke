@@ -85,7 +85,7 @@ The **Get Contributor Claim Information (`getContributorClaimInfo`)** function r
 - The **Estimated Available Allocated Claim** is dynamic and subject to change as other contributors process their claims. It is not guaranteed to remain the same when the claim is processed.
 - **Input Requirement**: The function can be called using the contributor's wallet address or identifier.
 
-#### Function Outputs
+#### Function Output Breakdown
 
 When called, the function returns the following (Output Breakdown):
 
