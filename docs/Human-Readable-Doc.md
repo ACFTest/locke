@@ -118,7 +118,7 @@ When called, the function returns the following (Output Breakdown):
 5. **Current Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
    - Sample output:
    ```
-      Your Current Estimated Available Allocated Claim: 10M tokens
+      Current Estimated Available Allocated Claim: 10M tokens
    ```
 
 #### Example: Contributor Claim Query
