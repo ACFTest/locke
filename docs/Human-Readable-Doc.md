@@ -398,16 +398,6 @@ daysElapsed = (toMountainTime(currentTimestamp) / 1 day) - (toMountainTime(lastC
   - Base Claim Limit = 50M.
   - Total Previous Day Claims = 20M.
   - **Max Daily Claim Limit = 50M + 20M = 70M.**
-
-### Token Claim by Contributor:
-- **Contributor Allocation:** 30 tokens across 3 wallets.
-  - Wallet #1 claims 7 tokens.
-    - **Remaining Allocation:** 23 tokens.
-  - Wallet #2 claims 8 tokens.
-    - **Remaining Allocation:** 15 tokens.
-  - Wallet #3 claims 6 tokens.
-    - **Remaining Allocation:** 9 tokens.
-
 ---
 
 ## Error Messages
