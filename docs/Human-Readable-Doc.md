@@ -135,7 +135,7 @@ When called, the function returns the following (Output Breakdown):
       Max Daily Claim Limit: 100M tokens.
       Total Remaining Day Claim: 10M tokens.
       
-      Contributor-Specific Information**:
+      Contributor-Specific Information:
       Contributor ID: XYZ123
       Registered Wallets: 3
       Tokens Claimed:
