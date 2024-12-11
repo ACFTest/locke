@@ -97,54 +97,54 @@ When called, the function returns the following:
    - Number of registered wallets.
    - Tokens claimed by each wallet.
 
-#### Examples
+#### Examples:
 
-##### Example 1: Contributor Query
+- #### Example 1: Contributor Query
 
-**Scenario**:
-- **Max Daily Claim Limit**: 100M tokens.
-- **Total Remaining Day Claim**: 10M tokens.
-- **Your Claim Allocation**: 20M tokens.
-- **Result**:
-  ```
-  Max Daily Claim Limit: 100M tokens
-  Total Remaining Day Claim: 10M tokens
-  Your Claim Allocation: 20M tokens
-  Your Estimated Available Allocated Claim: 10M tokens
-  ```
+  - **Scenario**:
+    - **Max Daily Claim Limit**: 100M tokens.
+    - **Total Remaining Day Claim**: 10M tokens.
+    - **Your Claim Allocation**: 20M tokens.
+    - **Result**:
+      ```
+      Max Daily Claim Limit: 100M tokens
+      Total Remaining Day Claim: 10M tokens
+      Your Claim Allocation: 20M tokens
+      Your Estimated Available Allocated Claim: 10M tokens
+      ```
 
-##### Example 2: Wallet-Specific Details
+- #### Example 2: Wallet-Specific Details
 
-**Scenario**:
-- **Contributor ID**: XYZ123.
-- **Wallets Registered**: 3.
-- **Tokens Claimed**:
-  - Wallet 1: 5M tokens.
-  - Wallet 2: 3M tokens.
-  - Wallet 3: 2M tokens.
-- **Result**:
-  ```
-  Contributor ID: XYZ123
-  Registered Wallets: 3
-  Tokens Claimed:
-    - Wallet 1: 5M tokens
-    - Wallet 2: 3M tokens
-    - Wallet 3: 2M tokens
-  ```
+  - **Scenario**:
+    - **Contributor ID**: XYZ123.
+    - **Wallets Registered**: 3.
+    - **Tokens Claimed**:
+      - Wallet 1: 5M tokens.
+      - Wallet 2: 3M tokens.
+      - Wallet 3: 2M tokens.
+    - **Result**:
+      ```
+      Contributor ID: XYZ123
+      Registered Wallets: 3
+      Tokens Claimed:
+        - Wallet 1: 5M tokens
+        - Wallet 2: 3M tokens
+        - Wallet 3: 2M tokens
+      ```
 
-##### Example 3: Real-Time Query and Dynamic Changes
+- #### Example 3: Real-Time Query and Dynamic Changes
 
-**Scenario**:
-- Contributor calls `getContributorClaimInfo` at 2:00 PM MT.
-- **System-Wide Information**:
-  - **Max Daily Claim Limit**: 100M tokens.
-  - **Total Remaining Day Claim**: 10M tokens.
-- **Contributor-Specific Information**:
-  - **Your Claim Allocation**: 15M tokens.
-  - **Your Estimated Available Allocated Claim**:
-    ```
-    10M tokens
-    ```
+  - **Scenario**:
+    - Contributor calls `getContributorClaimInfo` at 2:00 PM MT.
+    - **System-Wide Information**:
+      - **Max Daily Claim Limit**: 100M tokens.
+      - **Total Remaining Day Claim**: 10M tokens.
+    - **Contributor-Specific Information**:
+      - **Your Claim Allocation**: 15M tokens.
+      - **Your Estimated Available Allocated Claim**:
+        ```
+        10M tokens
+        ```
 ---
 
 ### 3. Claiming Tokens
