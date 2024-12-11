@@ -361,6 +361,7 @@ To convert:
 
 ##### **Formula**:
 ```
+1 day = 86400 seconds
 daysElapsed = (toMountainTime(currentTimestamp) / 1 day) - (toMountainTime(lastClaimTimestamp) / 1 day)
 ```
 
