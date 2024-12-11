@@ -62,6 +62,89 @@ Tokens allocated to a contributor are shared across their registered wallets.
   - Wallet #2 claims 8 tokens. Remaining balance: 15 tokens.
   - Wallet #3 claims 6 tokens. Remaining balance: 9 tokens.
 
+### 2A. Get Contributor Claim Information (`getContributorClaimInfo`):
+This function, when called upon, provides real-time information about a contributor's claim allocation, the system-wide remaining claim availability for the day, and wallet-specific claim details. It is designed for contributors to understand their claimable tokens and the system's current state at any given time.
+
+The **Get Contributor Claim Information (`getContributorClaimInfo`)** function retrieves the following real-time details for a specific contributor:
+
+1. **Max Daily Claim Limit**: The total number of tokens available for claims across all contributors on a given day.
+2. **Total Remaining Day Claim**: The number of tokens still available to be claimed system-wide for the day.
+3. **Your Claim Allocation**: The maximum tokens allocated to the contributor based on their registration details.
+4. **Your Estimated Available Allocated Claim**:
+   - Defined as the minimum of the contributor's allocation and the remaining system-wide availability:
+     ```
+     Estimated Available Allocated Claim = Min(Your Claim Allocation, Total Remaining Day Claim)
+     ```
+5. **Wallet-Specific Claim Information**:
+   - The number of wallets registered for the contributor.
+   - The number of tokens already claimed for each wallet.
+
+#### Key Notes
+
+- This function **does not reserve tokens** for the contributor. The information provided reflects the state at the time of the call.
+- The **Estimated Available Allocated Claim** is dynamic and subject to change as other contributors process their claims. It is not guaranteed to remain the same when the claim is processed.
+- **Input Requirement**: The function can be called using the contributor's wallet address or identifier.
+
+#### Function Outputs
+
+When called, the function returns the following:
+
+1. **Max Daily Claim Limit** (System-wide): The maximum tokens available to claim for all contributors on the current day.
+2. **Total Remaining Day Claim** (System-wide): The number of tokens still available for the day.
+3. **Your Claim Allocation** (Contributor-Specific): The maximum number of tokens allocated to the calling contributor.
+4. **Your Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
+5. **Wallet-Specific Claim Details**:
+   - Number of registered wallets.
+   - Tokens claimed by each wallet.
+
+#### Examples
+
+##### Example 1: Contributor Query
+
+**Scenario**:
+- **Max Daily Claim Limit**: 100M tokens.
+- **Total Remaining Day Claim**: 10M tokens.
+- **Your Claim Allocation**: 20M tokens.
+- **Result**:
+  ```
+  Max Daily Claim Limit: 100M tokens
+  Total Remaining Day Claim: 10M tokens
+  Your Claim Allocation: 20M tokens
+  Your Estimated Available Allocated Claim: 10M tokens
+  ```
+
+##### Example 2: Wallet-Specific Details
+
+**Scenario**:
+- **Contributor ID**: XYZ123.
+- **Wallets Registered**: 3.
+- **Tokens Claimed**:
+  - Wallet 1: 5M tokens.
+  - Wallet 2: 3M tokens.
+  - Wallet 3: 2M tokens.
+- **Result**:
+  ```
+  Contributor ID: XYZ123
+  Registered Wallets: 3
+  Tokens Claimed:
+    - Wallet 1: 5M tokens
+    - Wallet 2: 3M tokens
+    - Wallet 3: 2M tokens
+  ```
+
+##### Example 3: Real-Time Query and Dynamic Changes
+
+**Scenario**:
+- Contributor calls `getContributorClaimInfo` at 2:00 PM MT.
+- **System-Wide Information**:
+  - **Max Daily Claim Limit**: 100M tokens.
+  - **Total Remaining Day Claim**: 10M tokens.
+- **Contributor-Specific Information**:
+  - **Your Claim Allocation**: 15M tokens.
+  - **Your Estimated Available Allocated Claim**:
+    ```
+    10M tokens
+    ```
 ---
 
 ### 3. Claiming Tokens
