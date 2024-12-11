@@ -110,15 +110,21 @@ When called, the function returns the following (Output Breakdown):
       Wallet 2 (0x5678...efgh): 3M tokens
       Wallet 3 (0x9abc...ijkl): 2M tokens
    ```
- 4. **Claim Allocation** (Contributor-Specific): The maximum number of tokens allocated to the calling contributor.
+   
+ 4. **Total Claim Allocation** (Contributor-Specific): The maximum number of tokens allocated to the calling contributor.
     - Sample output:
     ```
-      Claim Allocation: 15M tokens
+      Total Claim Allocation: 25M tokens
     ```
-5. **Current Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
+ 5. **Unclaimed Allocation** (Contributor-Specific): The maximum number of tokens unclaimed to the calling contributor.
+    - Sample output:
+    ```
+      Unclaimed Allocation: 15M tokens
+    ```
+6. **Current Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
    - Sample output:
    ```
-      Current Estimated Available Allocated Claim: 10M tokens
+     Current Estimated Available Allocated Claim: 10M tokens
    ```
 
 #### Example: Contributor Claim Query
@@ -139,8 +145,9 @@ When called, the function returns the following (Output Breakdown):
           Wallet 1 (0x1234...abcd): 5M tokens
           Wallet 2 (0x5678...efgh): 3M tokens
           Wallet 3 (0x9abc...ijkl): 2M tokens
-          
-          Claim Allocation: 15M tokens
+
+          Total Claim Allocation: 25M tokens
+          Unclaimed Allocation: 15M tokens
           Current Estimated Available Allocated Claim: 10M tokens
       ```
 ---
