@@ -107,7 +107,7 @@ When called, the function returns the following (Output Breakdown):
 5. **Your Estimated Available Allocated Claim** (Contributor-Specific): The maximum number of tokens the contributor can claim at that moment, considering both their allocation and the system-wide remaining tokens.
    - Sample output:
    ```
-      Your Estimated Available Allocated Claim**: 10M tokens
+      Your Estimated Available Allocated Claim: 10M tokens
    ```
    
 6. **Wallet Claim Details**:
