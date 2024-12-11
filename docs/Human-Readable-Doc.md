@@ -307,6 +307,7 @@ Contributors can claim tokens dynamically, subject to the current calculated **M
 - The **`daysElapsed`** value determines whether the **Total Previous Day Claims** should be carried forward or reset to `0` based on the time elapsed since the last claim or mint.
 
 - **Formula to Determine Days Elapsed:**
+  - **1 day = 86400 seconds**
   - **daysElapsed = (Current Time - Last Claim Time) / 1 Day**
 
 - **Status Labels for `daysElapsed`:**
