@@ -379,8 +379,8 @@ daysElapsed = (toMountainTime(currentTimestamp) / 1 day) - (toMountainTime(lastC
 
 #### **Key Points**
 - **Mountain Time Conversion:** Adjusts UTC to local time (-7 or -6 hours).
+- **Cost gas for Mountain Time Conversion:** Everytime converting UTC to Mountain Time with DST Rule on-chain cost gas to the contributor.
 - **`daysElapsed` Calculation:** Ensures accurate tracking of daily operations based on Mountain Time.
-
 ---
 
 ## Additional Examples
