@@ -175,8 +175,11 @@ Contributors can claim tokens dynamically, subject to the current calculated **M
 
 #### Example:
 - **Max Daily Claim Limit:** 80M tokens.
-- **Request:** 90M tokens.
-- **Processed:** 80M tokens. Remaining 10M is unfilled and cannot be carried over.
+- **Claimant 1 Request**: 20M tokens → Processed: 20M tokens
+- **Remaining Daily Limit**: 60M tokens
+####
+- **Claimant 2 Request**: 90M tokens → Processed: 60M tokens
+- **Unfilled Claim**: 30M tokens (cannot be carried over to the next day)
 
 ##### Output Messages:
 - **Full Claim:**
