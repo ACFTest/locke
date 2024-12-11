@@ -127,7 +127,7 @@ When called, the function returns the following (Output Breakdown):
   
   - **Scenario**:
       - Contributor calls `getContributorClaimInfo` at 2:00 PM MT
-        - with contributor's wallet address
+        - with contributor's wallet eth address
        
       - **Result**:
       ```
