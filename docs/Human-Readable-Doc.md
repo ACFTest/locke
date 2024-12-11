@@ -99,7 +99,7 @@ When called, the function returns the following:
 
 #### Examples:
 
-- #### Example 1: Contributor Query
+- #### Example 1: Contributor Claim Query
 
   - **Scenario**:
     - **Max Daily Claim Limit**: 100M tokens.
