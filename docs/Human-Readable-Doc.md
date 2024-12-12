@@ -27,30 +27,71 @@ The **Max Daily Claim Limit** determines the maximum number of Locke Tokens that
 
 #### Examples:
 - **Example 1:**
-  - **Day 1:** Contributor claims 10M tokens.
-    - **Total Previous Day Claims:** 10M.
-    - **Max Daily Claim Limit (Day 2):** 50M (Base Claim Limit) + 10M = 60M.
+  - **Day 1:** Base Claim Limit 50 million (50M) Locke tokens are available, while Contributors claim 10M tokens on Day1.
+    - **Total Previous Day Claims:** 0M.
+    - **Max Daily Claim Limit on Day 1:** 50M (Base Claim Limit).
+    - **Total Current Day Claims**: 10M
+    - **The Actual Number of Token Claimed on Day 1**: 10M
+    - **Unfilled Claims**: 0M.
 
 - **Example 2:**
-  - **Day 2:** Contributor claims 0M tokens.
-    - **Total Previous Day Claims:** 0M.
-    - **Max Daily Claim Limit (Day 3):** 50M (Base Claim Limit) + 0M = 50M.
+  - **Day 2:** Base Claim Limit 50 million (50M) Locke tokens are available, while Contributors claim 0M tokens on Day 2.
+    - **Total Previous Day Claims:** 10M.
+    - **Max Daily Claim Limit on Day 2:** 50M (Base Claim Limit) + 10M = 60M.
+    - **Total Current Day Claims**: 0M
+    - **The Actual Number of Token Claimed on Day 2**: 0M
+    - **Unfilled Claims**: 0M.
 
 - **Example 3:**
-  - **Day 3:** Contributor claims 25M tokens.
-    - **Total Previous Day Claims:** 25M.
-    - **Max Daily Claim Limit (Day 4):** 50M (Base Claim Limit) + 25M = 75M.
+  - **Day 3:** Base Claim Limit 50 million (50M) Locke tokens are available, while
+Contributors claim 25M tokens on Day 3.
+    - **Total Previous Day Claims:** 0M.
+    - **Max Daily Claim Limit on Day 3:** 50M (Base Claim Limit).
+    - **Total Current Day Claims**: 25M
+    - **The Actual Number of Token Claimed on Day 3**: 25M
+    - **Unfilled Claims**: 0M.
 
+- **Example 4:**
+  - **Day 4:** Base Claim Limit 50 million (50M) Locke tokens are available, while Contributors claim 95M tokens on Day 4.
+    - **Total Previous Day Claims:** 25M.
+    - **Max Daily Claim Limit on Day 4:** 50M (Base Claim Limit) + 25M = 75M.
+    - **Total Current Day Claims:** 95M.
+    - **The Actual Number of Token Claimed on Day 4:** 75M
+    - **Unfilled Claims:** 20M.
+
+- **Example 5:**
+  - **Day 5:** Base Claim Limit 50 million (50M) Locke tokens are available, while Contributors claim 120M tokens on Day 5.
+    - **Total Previous Day Claims:** 75M.
+    - **Max Daily Claim Limit on Day 5:** 50M (Base Claim Limit) + 75M = 125M
+    - **Total Current Day Claims:** 120M.
+    - **The Actual Number of Token Claimed on Day 5:** 120M
+    - **Unfilled Claims:** 0M.
+
+- **Example 6:**
+  - **Day 6:** Base Claim Limit 50 million (50M) Locke tokens are available, while Contributors claim 200M tokens on Day 6.
+    - **Total Previous Day Claims:** 120M.
+    - **Max Daily Claim Limit on Day 6:** 50M (Base Claim Limit) + 120M = 175M
+    - **Total Current Day Claims:** 200M.
+    - **The Actual Number of Token Claimed on Day 6:** 175M
+    - **Unfilled Claims:** 25M.
+
+- **Example 7:**
+  - **Day 7:** Base Claim Limit 50 million (50M) Locke tokens are available, while Contributors claim 210M tokens on Day 7.
+    - **Total Previous Day Claims:** 175M.
+    - **Max Daily Claim Limit on Day 7:** 50M (Base Claim Limit) + 175M = 225M
+    - **Total Current Day Claims:** 210M.
+    - **The Actual Number of Token Claimed on Day 7:** 210M
+    - **Unfilled Claims:** 0M.
 ---
 
 ### 2. Contributor Management (Contributor's Identifier Account)
 
 #### Identification:
-Contributors are identified by an identifier (e.g., name, registration number) linked to a maximum of 3 wallet eth addresses.
+Contributors are identified by an identifier (e.g., individual name and Wyoming Driver License or entity name and Wyoming entity registration number) linked to a maximum of 3 wallet eth addresses (public keys).
 
 #### Immutable Data for Contributors Only:
 - Contributors cannot update or delete their identifiers or wallets to prevent fraud.
-- Owner of the smart contract (CryptoFed) can add, update **Contributor's Identifier Account** including 1-3 wallet eth addresses.
+- Owner of the smart contract (CryptoFed) can add, update **Contributor's Identifier Account** including 1-3 wallet eth addresses (public keys), but CryptoFed never knows the private keys for any of the three wallets.
   - **Contributor's Identifier Account** must have at least 1 wallet eth address for the account to be established or added.
 
 #### Token Allocation:
