@@ -435,23 +435,6 @@ daysElapsed = (toMountainTime(currentTimestamp) / 1 day) - (toMountainTime(lastC
 - **`daysElapsed` Calculation:** Ensures accurate tracking of daily operations based on Mountain Time.
 ---
 
-## Additional Examples
-
-### Max Daily Claim Limit Calculation:
-- **Day 1:**
-  - Base Claim Limit = 50M.
-  - No previous day claims (first day).
-  - **Max Daily Claim Limit = 50M.**
-- **Day 2:**
-  - Base Claim Limit = 50M.
-  - Total Previous Day Claims = 15M.
-  - **Max Daily Claim Limit = 50M + 15M = 65M.**
-- **Day 3:**
-  - Base Claim Limit = 50M.
-  - Total Previous Day Claims = 20M.
-  - **Max Daily Claim Limit = 50M + 20M = 70M.**
----
-
 ## Error Messages
 
 - **Unauthorized Wallet:**
