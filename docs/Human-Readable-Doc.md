@@ -398,14 +398,23 @@ Ethereum uses **UTC timestamps** by default because it is a global standard and 
 
 #### **How to Convert UTC to Mountain Time**
 
-Mountain Time operates on two offsets:
-- **Standard Time:** UTC-7
+Mountain Time operates on two predefined offsets, designed to optimize gas efficiency:
 - **DST (Summer):** UTC-6
+- **Standard Time:** UTC-7
 
 To convert:
-1. If DST is active, subtract **6 hours** from UTC.
-2. If not, subtract **7 hours**.
-3. The contract includes a **manual override** for DST settings, allowing adjustments to account for changes or unexpected transitions.
+1. **Predefined DST Offset Rules (UTC to Mountain Time)**
+  - The smart contract **automatically adjusts** for Daylight Saving Time (DST) based on predefined rules:
+    - If DST is active, subtract **6 hours** from UTC.
+    - If not, subtract **7 hours** from UTC.
+
+  - **Key Notes:**
+    - **No Gas Cost for Reading Information**:
+      - When contributors or users access information (e.g., checking claim details), the smart contract performs the computation without incurring gas costs.
+    - **Minimal Gas Impact for Transactions:**  
+      - The computation for converting time (e.g., from UTC to Mountain Time) is included in the overall transaction process and has a minimal effect on gas fees. This ensures that the conversion does not significantly increase the cost of claiming tokens or other operations.
+
+2. **Manual Override:** The smart contract includes a **manual override** for DST as a fail-safe. While the system automatically adjusts for DST based on predefined rules, the override provides flexibility for unexpected changes, such as the government removing or modifying DST policies. If DST remains unchanged, the smart contract automatically handles DST without requiring the override.
 
 #### **Calculating `daysElapsed`**
 
