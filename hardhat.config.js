@@ -25,6 +25,16 @@ module.exports = {
     artifacts: "./artifacts",
   },
   networks: {
+    hardhat: {
+      allowBlocksWithSameTimestamp: true,
+      mining: {
+        auto: true,
+        interval: 0,
+      },
+      chainId: 1337,
+      // Use real timestamps for DST testing
+      time: new Date().getTime(),
+    },
     localhost: {
       url: "http://127.0.0.1:8545",
     },
