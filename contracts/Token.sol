@@ -565,6 +565,21 @@ contract Token is
     }
 
     /**
+     * @notice Sets manual override for DST and updates its active state
+     * @param manualOverride Boolean indicating if manual override is active
+     * @param daylightSavingsActive Boolean indicating DST state during override
+     *        - true: DST is active (UTC offset -6 hours)
+     *        - false: DST is inactive (UTC offset -7 hours)
+     * @dev Can only be called by the contract owner
+     */
+    function setManualDSTOverride(bool manualOverride, bool daylightSavingsActive) external onlyOwner {
+        _manualOverride = manualOverride;
+        _daylightSavingsActive = daylightSavingsActive;
+
+        emit ManualOverrideUpdated(manualOverride, daylightSavingsActive);
+    }
+
+    /**
      * @notice Converts uint256 to string
      * @param value Number to convert
      * @return string String representation

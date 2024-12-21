@@ -8,12 +8,14 @@
  * - UTC to Mountain Time conversion
  * - Daylight Savings Time (DST) transitions
  * - Time boundary consistency
+ * - Manual DST Override functionality
  *
  * @key_features
  * - Accurate days elapsed tracking
  * - UTC to Mountain Time conversion
  * - DST offset handling
  * - Time boundary preservation
+ * - Manual DST override handling
  *
  * @dependencies
  * - Chai assertion library
@@ -132,6 +134,57 @@ describe("Token: Time and DST Handling", function () {
 
       const offset = await token.getCurrentUTCOffset();
       expect(offset.div(-3600)).to.equal(7); // -7 hours outside DST
+    });
+  });
+
+  /**
+   * @description Nested describe block for Manual DST Override Testing
+   */
+  describe("Manual DST Override", function () {
+    it("Should activate manual override and set DST active", async function () {
+      await token.connect(owner).setManualDSTOverride(true, true); // Enable manual override with DST active
+      const dstStatus = await token.getDSTStatus();
+
+      expect(dstStatus.manualOverride).to.be.true;
+      expect(dstStatus.daylightSavingsActive).to.be.true;
+
+      const offset = await token.getCurrentUTCOffset();
+      expect(offset.div(-3600)).to.equal(6); // -6 hours during DST
+    });
+
+    it("Should activate manual override and set DST inactive", async function () {
+      await token.connect(owner).setManualDSTOverride(true, false); // Enable manual override with DST inactive
+      const dstStatus = await token.getDSTStatus();
+
+      expect(dstStatus.manualOverride).to.be.true;
+      expect(dstStatus.daylightSavingsActive).to.be.false;
+
+      const offset = await token.getCurrentUTCOffset();
+      expect(offset.div(-3600)).to.equal(7); // -7 hours outside DST
+    });
+
+    it("Should disable manual override and revert to automatic DST", async function () {
+      // Activate manual override first
+      await token.connect(owner).setManualDSTOverride(true, true);
+
+      // Disable manual override
+      await token.connect(owner).setManualDSTOverride(false, false);
+
+      const dstStatus = await token.getDSTStatus();
+      expect(dstStatus.manualOverride).to.be.false;
+
+      // Verify that automatic DST logic is used
+      const currentTimestamp = await time.latest();
+      const offset = await token.getCurrentUTCOffset();
+
+      if (
+        currentTimestamp >= dstStatus.dstStart &&
+        currentTimestamp < dstStatus.dstEnd
+      ) {
+        expect(offset.div(-3600)).to.equal(6); // -6 hours during DST
+      } else {
+        expect(offset.div(-3600)).to.equal(7); // -7 hours outside DST
+      }
     });
   });
 });
