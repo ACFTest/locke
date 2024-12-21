@@ -145,8 +145,8 @@ describe("Token: Time and DST Handling", function () {
       await token.connect(owner).setManualDSTOverride(true, true); // Enable manual override with DST active
       const dstStatus = await token.getDSTStatus();
 
-      expect(dstStatus.manualOverride).to.be.true;
-      expect(dstStatus.daylightSavingsActive).to.be.true;
+      expect(dstStatus.isManualOverride).to.be.true;
+      expect(dstStatus.isDaylightSavingsActive).to.be.true;
 
       const offset = await token.getCurrentUTCOffset();
       expect(offset.div(-3600)).to.equal(6); // -6 hours during DST
@@ -156,8 +156,8 @@ describe("Token: Time and DST Handling", function () {
       await token.connect(owner).setManualDSTOverride(true, false); // Enable manual override with DST inactive
       const dstStatus = await token.getDSTStatus();
 
-      expect(dstStatus.manualOverride).to.be.true;
-      expect(dstStatus.daylightSavingsActive).to.be.false;
+      expect(dstStatus.isManualOverride).to.be.true;
+      expect(dstStatus.isDaylightSavingsActive).to.be.false;
 
       const offset = await token.getCurrentUTCOffset();
       expect(offset.div(-3600)).to.equal(7); // -7 hours outside DST
@@ -171,7 +171,7 @@ describe("Token: Time and DST Handling", function () {
       await token.connect(owner).setManualDSTOverride(false, false);
 
       const dstStatus = await token.getDSTStatus();
-      expect(dstStatus.manualOverride).to.be.false;
+      expect(dstStatus.isManualOverride).to.be.false;
 
       // Verify that automatic DST logic is used
       const currentTimestamp = await time.latest();

@@ -67,8 +67,8 @@ contract Token is
     mapping(address => bool) private _authorizedWallets;
 
     /// @dev DST management variables
-    bool private _manualOverride;
-    bool private _daylightSavingsActive;
+    bool private _isManualOverride;
+    bool private _isDaylightSavingsActive;
     uint256 private _dstStartTimestamp;
     uint256 private _dstEndTimestamp;
 
@@ -97,10 +97,10 @@ contract Token is
 
     /**
      * @dev Emitted when DST settings change
-     * @param overrideActive Manual override status
-     * @param daylightSavingsActive DST status
+     * @param isOverrideActive Manual override status
+     * @param isDaylightSavingsActive DST status
      */
-    event ManualOverrideUpdated(bool overrideActive, bool daylightSavingsActive);
+    event ManualOverrideUpdated(bool isOverrideActive, bool isDaylightSavingsActive);
 
     /**
      * @dev Emitted with claim status
@@ -459,8 +459,8 @@ contract Token is
 
     /**
      * @notice Gets DST configuration status
-     * @return manualOverride Current override status
-     * @return daylightSavingsActive Current DST status
+     * @return isManualOverride Current override status
+     * @return isDaylightSavingsActive Current DST status
      * @return dstStart DST start timestamp for current year
      * @return dstEnd DST end timestamp for current year
      */
@@ -468,15 +468,15 @@ contract Token is
         external 
         view 
         returns (
-            bool manualOverride,
-            bool daylightSavingsActive,
+            bool isManualOverride,
+            bool isDaylightSavingsActive,
             uint256 dstStart,
             uint256 dstEnd
         ) 
     {
         return (
-            _manualOverride,
-            _daylightSavingsActive,
+            _isManualOverride,
+            _isDaylightSavingsActive,
             _dstStartTimestamp,
             _dstEndTimestamp
         );
@@ -520,8 +520,8 @@ contract Token is
      * @dev Handles both manual override and automatic DST
      */
     function _getCurrentUTCOffset() private view returns (int256) {
-        if (_manualOverride) {
-            return _daylightSavingsActive ? -6 * 3600 : -7 * 3600;
+        if (_isManualOverride) {
+            return _isDaylightSavingsActive ? -6 * 3600 : -7 * 3600;
         }
 
         if (block.timestamp >= _dstStartTimestamp && 
@@ -566,17 +566,17 @@ contract Token is
 
     /**
      * @notice Sets manual override for DST and updates its active state
-     * @param manualOverride Boolean indicating if manual override is active
-     * @param daylightSavingsActive Boolean indicating DST state during override
+     * @param isManualOverride Boolean indicating if manual override is active
+     * @param isDaylightSavingsActive Boolean indicating DST state during override
      *        - true: DST is active (UTC offset -6 hours)
      *        - false: DST is inactive (UTC offset -7 hours)
      * @dev Can only be called by the contract owner
      */
-    function setManualDSTOverride(bool manualOverride, bool daylightSavingsActive) external onlyOwner {
-        _manualOverride = manualOverride;
-        _daylightSavingsActive = daylightSavingsActive;
+    function setManualDSTOverride(bool isManualOverride, bool isDaylightSavingsActive) external onlyOwner {
+        _isManualOverride = isManualOverride;
+        _isDaylightSavingsActive = isDaylightSavingsActive;
 
-        emit ManualOverrideUpdated(manualOverride, daylightSavingsActive);
+        emit ManualOverrideUpdated(isManualOverride, isDaylightSavingsActive);
     }
 
     /**
