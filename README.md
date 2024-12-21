@@ -1,42 +1,43 @@
 # Locke Token (LOCKE)
 
-An upgradeable ERC20 token contract with features such as capped supply, minting, burning, and upgradability via OpenZeppelin's proxy pattern. This repository is designed for the LOCKE Token project implementation. It includes test cases, deployment scripts, and functionalities for upgrading and downgrading the smart contract. This is a governance token.
+An upgradeable ERC20 governance token for the LOCKE Token project, featuring a capped supply, minting, and OpenZeppelin-based upgradability. It implements dynamic daily claim limits for efficient token distribution and secure contributor wallet management, allowing only the contract owner to manage wallets while enabling contributors to claim and transfer tokens. The repository includes test cases, deployment scripts, and upgrade/downgrade functionality.
 
 ---
 
 ## Features
 
-- **Upgradeable Contract**: Built using OpenZeppelin's upgradeable contract standards.
-- **Maximum Supply**: Enforces a capped supply for LOCKE token minting.
-- **Minting**: Owner-only function (Smart Contract Owner) to mint new LOCKE tokens within the capped supply limit.
-- **Burning**: Owner-only function (Smart Contract Owner) to burn LOCKE tokens from their balance, reducing the total supply accordingly.
-- **Upgrade and Downgrade**: Demonstrates smooth contract upgrades and downgrades while maintaining state integrity.
-   - **Token.sol** is the primary smart contract, intended for production, and the main focus of this project.
-   - **TokenV2.sol** is a mock smart contract created exclusively for testing purposes with an additional function getVersion(). It is designed to demonstrate the upgrade and downgrade functionality of this project and is not intended for production use.
-   - **Example test cases for Upgrade and Downgrade Smart Contract**
-      - Upgrade from Token.sol to TokenV2.sol
-      - Downgrade from TokenV2.sol to Token.sol.
-- **Fully Tested**:  Test cases covering initialization, minting, burning, edge cases, upgrades, and downgrades.
+The primary focus of this repository is the implementation and functionality of the `Token.sol` contract. The contract serves as the core of the LOCKE Token governance system and includes the following features:
 
+- **Upgradeable ERC20 Framework**: Built using OpenZeppelin's proxy pattern for seamless upgrades and downgrades.
+   - **TokenV2.sol** (mock contract) demonstrates upgradeability but is not intended for production.
+- **Capped Token Supply**: Total LOCKE Tokens are capped at **1 trillion tokens**, enforcing a strict supply limit.
+- **Dynamic Token Claim Distribution**: Implements a mechanism to enforce daily claim limits based on prior day claims and a fixed base limit.
+    - **Token Supply Limits**:
+        - **Maximum Supply**: 1 Trillion LOCKE Tokens.
+        - **Base Claim Limit**: 50 million LOCKE Tokens per day.
+        - **Dynamic Max Daily Claim Limit**: The maximum tokens claimable in a day, recalculated daily based on prior claims.
+          - **Formula**:
+             ```
+             Max Daily Claim Limit = Base Claim Limit (50,000,000) + Total Previous Day Claims
+             ```
+             This formula strictly governs the maximum number of LOCKE Tokens that can be claimed daily, ensuring fair distribution.
+    
+- **Contributor Wallet Management**: Ensures secure management of contributors' wallet addresses, allowing the contract owner to add, update, or remove wallets with contributor identifier (e.g., individual name and Wyoming Driver License or entity name and Wyoming entity registration number) linked to a maximum of 3 wallet eth addresses (public keys). The contract does not have access to the private keys of contributors' wallet addresses, but allows contributors to claim tokens to their selected wallets.
+- **Governance Functionality**: Enables contributors to claim and transfer tokens securely and efficiently.
+- **Minting:** Owner-only function to mint tokens within the capped supply limit.
+- **Gas Fee Responsibility**: Contributors are responsible for gas fees when claiming or transferring tokens, promoting decentralization and sustainability.
 ---
 
 ## Deployment Parameters
 
-- **Token.sol**:
-
-   - **maxCapacitySupply**: 1,000,000,000,000 (1 trillion) LOCKE tokens as the maximum supply allowed on the Ethereum Protocol under ERC-20 standards.
-
-   - **initialSupply**: 50,000,000 LOCKE tokens minted to the owner's wallet during deployment. This represents the initial circulating supply.
-
-   - **totalSupply**: is also the initialSupply of 50,000,000 LOCKE tokens. This is also called the current LOCKE token supply.
-
-- **Distribution.sol**:
-
-   - **maxCurrentDailySupply**: Managed in `Distribution.sol`. Calculated dynamically as the base daily supply (50,000,000 LOCKE tokens) plus the total claims from the previous day. This value is accessed by `Token.sol` to enforce minting limits.
-
-   - **deploymentTimestamp**: The timestamp recorded when the `Distribution.sol` contract is deployed. Used to calculate the current day (`dayCounter`) dynamically.
-
-   - **dayCounter**: Dynamically calculated in `Distribution.sol` based on the elapsed time since `deploymentTimestamp`, adjusted for Mountain Time (MT) with predefined daylight savings rules. Used to track the number of days and account for skipped days.
+### Token.sol
+- **Token Name**: `LOCKE`
+- **Token Symbol**: `LOCKE`
+- **Decimals**: `18` (standard for ERC20 tokens)
+- **Maximum Supply**: `1,000,000,000,000` (1 trillion) LOCKE tokens as the maximum supply allowed on the Ethereum Protocol under ERC-20 standards.
+- **Owner Address**: Deployer's Ethereum wallet address
+- **Proxy Admin Address**: Address managing the upgradeability of the contract
+- **Upgradeable Proxy Pattern**: Deployed using OpenZeppelin's transparent proxy pattern for seamless upgrades while maintaining state integrity.
 
 ## Self Audit
 
@@ -67,7 +68,6 @@ An upgradeable ERC20 token contract with features such as capped supply, minting
   - OpenZeppelin Contracts
   - OpenZeppelin Upgradeable Library
   - Chai.js and Ethers.js
-
 ---
 
 ## Installation
@@ -113,29 +113,69 @@ npx hardhat run scripts/downgrade.js --network <network-name>
 
 Downgrades the proxy back to the original `Token` implementation.
 
----
+### 4. Example Outputs
 
-## Example Outputs
-
-### Upgrade to TokenV2.sol Smart Contract
+#### Upgrade to TokenV2.sol Smart Contract
 
 ```
 Locke Token upgraded to TokenV2 at: <eth address>
 Version updated to: Version 2
 ```
 
-### Downgrade to Token.sol Smart Contract
+#### Downgrade to Token.sol Smart Contract
 
 ```
 Locke Token downgraded to Token at: <eth address>
 Version function is unavailable after downgrade
 ```
+---
+
+## Dynamic Max Daily Claim Limit
+
+The Max Daily Claim Limit is recalculated using the following formula:
+
+**Max Daily Claim Limit = Base Claim Limit (50M) + Total Previous Day Claims**
+
+### 1. Examples of Daily Claim Limit Calculations
+
+| Day | Base Claim Limit | Previous Day Claims | Max Daily Claim Limit |
+|-----|------------------|---------------------|-----------------------|
+| 1   | 50M              | 0M                  | 50M                  |
+| 2   | 50M              | 10M                 | 60M                  |
+| 3   | 50M              | 0M                  | 50M                  |
+
+
+### 2. Examples: Token Claim Distribution
+
+The **Max Daily Claim Limit** dynamically adjusts based on the Base Claim Limit and prior day claims, ensuring fair token distribution. It includes examples of both complete and partial claims, showcasing how the system processes requests within daily limits while managing unfulfilled claims effectively.
+
+| Day | Base Claim Limit | Total Previous Day Claims | Max Daily Claim Limit              | Total Current Day Claims | Actual Tokens Claimed | Unfilled Claims |
+|-----|------------------|---------------------------|------------------------------------|--------------------------|-----------------------|-----------------|
+| 1   | 50M              | 0M                        | 50M (Base Claim Limit)             | 10M                      | 10M                   | 0M              |
+| 2   | 50M              | 10M                       | 50M (Base Claim Limit) + 10M = 60M | 0M                       | 0M                    | 0M              |
+| 3   | 50M              | 0M                        | 50M (Base Claim Limit)             | 25M                      | 25M                   | 0M              |
+| 4   | 50M              | 25M                       | 50M (Base Claim Limit) + 25M = 75M | 95M                      | 75M                   | 20M             |
+| 5   | 50M              | 75M                       | 50M (Base Claim Limit) + 75M = 125M| 120M                     | 120M                  | 0M              |
+| 6   | 50M              | 120M                      | 50M (Base Claim Limit) + 120M = 175M| 200M                     | 175M                  | 25M             |
+| 7   | 50M              | 175M                      | 50M (Base Claim Limit) + 175M = 225M| 210M                     | 210M                  | 0M              |
+
+
+---
+
+## Contributor Management
+
+Contributors are identified by a **unique identifier** (e.g., a Wyoming Driver License or entity registration number) and can **register up to 3 wallet addresses (public keys only)**. The allocated tokens are shared across these wallets. The contract does not have access to the private keys of contributors' wallet addresses, but allows contributors to claim tokens to their selected wallets.
+
+### Contributor Management Features
+- **Contributor data:** Unique identifier (e.g., a Wyoming Driver License or entity registration number) and up to 3 wallet eth addresses (public keys only).
+- **Immutable Data For Contributors**: Contributor data cannot be updated or deleted by the contributor.
+- **Flexible Updates**: The contract owner can add or update contributor data, including wallets and token allocations.
 
 ---
 
 ## Running Tests
 
-Run the full test suite, including initialization, minting, burning, upgrades, and downgrades:
+Run the full test suite, including initialization, contributor management, daily claim scenarios, time and DST handling, upgrades, error handling, and downgrades:
 
 ```bash
 npx hardhat test
@@ -144,39 +184,98 @@ npx hardhat test
 ### Sample Output
 
 ```
-Locke Token Contract
-    Initialization
-      ✔ Should set the correct owner
-      ✔ Should set the correct max capacity supply
-      ✔ Should set the initial supply correctly
-      ✔ Should assign the initial supply to the owner
-    Minting
-      ✔ Should allow the owner to mint tokens
-      ✔ Should not allow non-owners to mint tokens
-      ✔ Should not allow minting beyond the max capacity supply
-      ✔ Should emit a TokensMinted event on successful minting
-    Burning
-      ✔ Should allow the owner to burn tokens from their balance, reducing the total supply accordingly
-      ✔ Should not allow non-owners to burn tokens
-      ✔ Should emit a TokensBurned event on successful burning
-    Transfers
-      ✔ Should allow the owner to transfer tokens to a non-owner
-      ✔ Should allow non-owners to transfer tokens to another address
-      ✔ Should not allow transfers exceeding balance
-    Edge Cases
-      ✔ Should not allow minting to the zero address
-      ✔ Should not allow burning zero tokens
-      ✔ Should not allow minting zero tokens
-    Upgrade and Downgrade
-      ✔ Should upgrade the current smart contract to TokenV2.sol and getVersion function is available
-      ✔ Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable
+Token: Initialization
+    ✔ Should initialize with correct values
+    ✔ Should not initialize with zero address owner
+
+  Token: Contributor Management
+    ✔ Should add a new contributor with single wallet
+    ✔ Should add a new contributor with multiple wallets
+    ✔ Should reject more than 3 wallets
+    ✔ Should reject zero wallets
+    ✔ Should update existing contributor's wallet addresses
+
+  Token: Daily Claim Scenarios
+
+    ✔ Example 1: Base Claim Limit with 10M Claims
+      - Previous Day Claims: 0
+      - Max Daily Limit: 50,000,000
+      - Total Request Amount: 10,000,000
+      - Total Claimed: 10,000,000
+      - Unfilled Claims: 0
+
+    ✔ Example 2: Previous Day Claims with No Current Claims
+      - Previous Day Claims: 10,000,000
+      - Max Daily Limit: 60,000,000
+      - Total Request Amount: 0
+      - Total Claimed: 0
+      - Unfilled Claims: 0 (44ms)
+
+    ✔ Example 3: Base Claim Limit with 25M Claims
+      - Previous Day Claims: 0
+      - Max Daily Limit: 50,000,000
+      - Total Request Amount: 25,000,000
+      - Total Claimed: 25,000,000
+      - Unfilled Claims: 0
+
+    ✔ Example 4: Partial Claims with Increased Limit
+      - Previous Day Claims: 25,000,000
+      - Max Daily Limit: 75,000,000
+      - Total Request Amount: 95,000,000
+      - Total Claimed: 75,000,000
+      - Unfilled Claims: 20,000,000 (53ms)
+
+    ✔ Example 5: Full Claim within Increased Limit
+      - Previous Day Claims: 75,000,000
+      - Max Daily Limit: 125,000,000
+      - Total Request Amount: 120,000,000
+      - Total Claimed: 120,000,000
+      - Unfilled Claims: 0 (59ms)
+
+    ✔ Example 6: Partial Claims with High Limit
+      - Previous Day Claims: 120,000,000
+      - Max Daily Limit: 170,000,000
+      - Total Request Amount: 200,000,000
+      - Total Claimed: 170,000,000
+      - Unfilled Claims: 30,000,000 (78ms)
+
+    ✔ Example 7: Full Claim with Very High Limit
+      - Previous Day Claims: 175,000,000
+      - Max Daily Limit: 225,000,000
+      - Total Request Amount: 210,000,000
+      - Total Claimed: 210,000,000
+      - Unfilled Claims: 0 (86ms)
+
+  Token: Time and DST Handling
+    ✔ Should calculate days elapsed correctly
+    ✔ Should convert UTC to Mountain Time correctly
+    ✔ Should maintain consistent day boundaries across DST changes
+    DST Transitions
+      ✔ Should handle DST start transition
+      ✔ Should handle DST end transition
+
+  Token: Error Handling
+    ✔ Should prevent unauthorized wallet claims
+    ✔ Should prevent claims exceeding allocation
+    ✔ Should prevent claims when daily limit is exhausted
+    ✔ Should reset daily limit after skipped days
+    ✔ Should handle invalid claim amounts
+
+  Token Upgrade and Downgrade Tests
+    ✔ Should upgrade the current smart contract to TokenV2.sol and getVersion function is available (54ms)
+    ✔ Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable (111ms)
 
 
-  19 passing (1s)
+  26 passing (2s)
 
 ```
 
 ---
+
+## For More In Depth Information
+
+### Human Readable Documentation
+For detailed human readable documentation and further information, please refer to the [Human Readable Documentation](docs/Human-Readable-Doc.md).
 
 ## Contact
 
