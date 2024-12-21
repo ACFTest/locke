@@ -153,6 +153,14 @@ The primary focus of this repository is the implementation and functionality of 
 - **`_calculateDSTEnd(uint256 timestamp)`**:  
   Calculates the end timestamp of daylight savings for the current year.
 
+- **`setManualDSTOverride(bool manualOverride, bool daylightSavingsActive)`**:  
+  Allows the owner of the contract to manually override the daylight savings settings.  
+  - **Parameters**:
+    - `manualOverride`:  
+      `true` to activate manual override; `false` to revert to automatic DST handling.  
+    - `daylightSavingsActive`:  
+      `true` to set DST as active (UTC offset of -6 hours); `false` to set DST as inactive (UTC offset of -7 hours).  
+
 - **`_uintToString(uint256 value)`**:  
   Converts a `uint256` value to its string representation.
 
@@ -466,7 +474,7 @@ npx hardhat test
 ### Sample Output
 
 ```
-Token: Initialization
+  Token: Initialization
     ✔ Should initialize with correct values
     ✔ Should not initialize with zero address owner
 
@@ -491,7 +499,7 @@ Token: Initialization
       - Max Daily Limit: 60,000,000
       - Total Request Amount: 0
       - Total Claimed: 0
-      - Unfilled Claims: 0 (44ms)
+      - Unfilled Claims: 0 (42ms)
 
     ✔ Example 3: Base Claim Limit with 25M Claims
       - Previous Day Claims: 0
@@ -505,28 +513,28 @@ Token: Initialization
       - Max Daily Limit: 75,000,000
       - Total Request Amount: 95,000,000
       - Total Claimed: 75,000,000
-      - Unfilled Claims: 20,000,000 (53ms)
+      - Unfilled Claims: 20,000,000 (56ms)
 
     ✔ Example 5: Full Claim within Increased Limit
       - Previous Day Claims: 75,000,000
       - Max Daily Limit: 125,000,000
       - Total Request Amount: 120,000,000
       - Total Claimed: 120,000,000
-      - Unfilled Claims: 0 (59ms)
+      - Unfilled Claims: 0 (65ms)
 
     ✔ Example 6: Partial Claims with High Limit
       - Previous Day Claims: 120,000,000
       - Max Daily Limit: 170,000,000
       - Total Request Amount: 200,000,000
       - Total Claimed: 170,000,000
-      - Unfilled Claims: 30,000,000 (78ms)
+      - Unfilled Claims: 30,000,000 (85ms)
 
     ✔ Example 7: Full Claim with Very High Limit
       - Previous Day Claims: 175,000,000
       - Max Daily Limit: 225,000,000
       - Total Request Amount: 210,000,000
       - Total Claimed: 210,000,000
-      - Unfilled Claims: 0 (86ms)
+      - Unfilled Claims: 0 (102ms)
 
   Token: Time and DST Handling
     ✔ Should calculate days elapsed correctly
@@ -535,6 +543,10 @@ Token: Initialization
     DST Transitions
       ✔ Should handle DST start transition
       ✔ Should handle DST end transition
+    Manual DST Override
+      ✔ Should activate manual override and set DST active
+      ✔ Should activate manual override and set DST inactive
+      ✔ Should disable manual override and revert to automatic DST
 
   Token: Error Handling
     ✔ Should prevent unauthorized wallet claims
@@ -545,10 +557,10 @@ Token: Initialization
 
   Token Upgrade and Downgrade Tests
     ✔ Should upgrade the current smart contract to TokenV2.sol and getVersion function is available (54ms)
-    ✔ Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable (111ms)
+    ✔ Should downgrade the current smart contract back to Token.sol and verify getVersion function is unavailable (110ms)
 
 
-  26 passing (2s)
+  29 passing (2s)
 
 ```
 
