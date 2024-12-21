@@ -73,7 +73,7 @@ The primary focus of this repository is the implementation and functionality of 
 
 #### Constants:
 - **`MAX_SUPPLY`**: Maximum token supply (1 trillion tokens).
-- **`DAILY_BASE_SUPPLY`**: Daily base token supply limit (50 million tokens).
+- **`DAILY_BASE_SUPPLY`**: Daily base token supply capacity (50 million tokens).
 - **`SECONDS_IN_A_DAY`**: Number of seconds in one day (86,400).
 
 #### State Variables:
