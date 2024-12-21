@@ -83,8 +83,8 @@ The primary focus of this repository is the implementation and functionality of 
 - **`_maxDailyLimit`**: Maximum tokens that can be claimed for the current day.
 - **`_contributors`**: Mapping of contributor addresses to their respective data (`identifier`, `wallets`, `allocatedTokens`, `claimedTokens`).
 - **`_authorizedWallets`**: Mapping to quickly check if a wallet is authorized for claiming.
-- **`_manualOverride`**: Boolean to enable or disable manual daylight savings override.
-- **`_daylightSavingsActive`**: Boolean to indicate if daylight savings time (DST) is currently active.
+- **`_isManualOverride`**: Boolean to enable or disable manual daylight savings override.
+- **`_isDaylightSavingsActive`**: Boolean to indicate if daylight savings time (DST) is currently active.
 - **`_dstStartTimestamp`**: Timestamp when DST starts for the current year.
 - **`_dstEndTimestamp`**: Timestamp when DST ends for the current year.
 
@@ -153,12 +153,12 @@ The primary focus of this repository is the implementation and functionality of 
 - **`_calculateDSTEnd(uint256 timestamp)`**:  
   Calculates the end timestamp of daylight savings for the current year.
 
-- **`setManualDSTOverride(bool manualOverride, bool daylightSavingsActive)`**:  
+- **`setManualDSTOverride(bool isManualOverride, bool _isDaylightSavingsActive)`**:  
   Allows the owner of the contract to manually override the daylight savings settings.  
   - **Parameters**:
-    - `manualOverride`:  
+    - `isManualOverride`:  
       `true` to activate manual override; `false` to revert to automatic DST handling.  
-    - `daylightSavingsActive`:  
+    - `_isDaylightSavingsActive`:  
       `true` to set DST as active (UTC offset of -6 hours); `false` to set DST as inactive (UTC offset of -7 hours).  
 
 - **`_uintToString(uint256 value)`**:  
